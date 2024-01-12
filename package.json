@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "stop": "supabase",
     "typegen": "supabase gen types typescript --local --schema public > types/supabase.ts"
   },
   "dependencies": {
