@@ -9,13 +9,201 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      [_ in never]: never
+      form_results: {
+        Row: {
+          form_id: string | null
+          id: string
+          non_user_id: number | null
+          question_id: string | null
+          submission_timestamp: string | null
+          user_answer: string | null
+          user_id: string | null
+        }
+        Insert: {
+          form_id?: string | null
+          id?: string
+          non_user_id?: number | null
+          question_id?: string | null
+          submission_timestamp?: string | null
+          user_answer?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          form_id?: string | null
+          id?: string
+          non_user_id?: number | null
+          question_id?: string | null
+          submission_timestamp?: string | null
+          user_answer?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "form_results_form_id_fkey"
+            columns: ["form_id"]
+            isOneToOne: false
+            referencedRelation: "forms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "form_results_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "form_results_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      forms: {
+        Row: {
+          description: string | null
+          id: string
+          is_quiz: boolean
+          title: string
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          is_quiz?: boolean
+          title: string
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          is_quiz?: boolean
+          title?: string
+        }
+        Relationships: []
+      }
+      question_choices: {
+        Row: {
+          choice_text: string
+          id: string
+          question_id: string | null
+        }
+        Insert: {
+          choice_text: string
+          id?: string
+          question_id?: string | null
+        }
+        Update: {
+          choice_text?: string
+          id?: string
+          question_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_choices_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      questions: {
+        Row: {
+          correct_answer_id: string | null
+          id: string
+          metadata: Json | null
+          question_text: string
+          section_id: string | null
+          type: string
+        }
+        Insert: {
+          correct_answer_id?: string | null
+          id?: string
+          metadata?: Json | null
+          question_text: string
+          section_id?: string | null
+          type: string
+        }
+        Update: {
+          correct_answer_id?: string | null
+          id?: string
+          metadata?: Json | null
+          question_text?: string
+          section_id?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_correct_answer"
+            columns: ["correct_answer_id"]
+            isOneToOne: false
+            referencedRelation: "question_choices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "questions_section_id_fkey"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "sections"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      sections: {
+        Row: {
+          description: string | null
+          form_id: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          description?: string | null
+          form_id?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          description?: string | null
+          form_id?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sections_form_id_fkey"
+            columns: ["form_id"]
+            isOneToOne: false
+            referencedRelation: "forms"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_form_questions: {
+        Args: {
+          form_uuid: string
+        }
+        Returns: Json
+      }
+      get_user_form_results: {
+        Args: {
+          form_uuid: string
+          user_uuid: string
+          non_user_id: number
+        }
+        Returns: {
+          result_id: string
+          question_id: string
+          question_text: string
+          user_answer: string
+          submission_timestamp: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
