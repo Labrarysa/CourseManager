@@ -6,7 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: supabase/setup-cli@v1
+      - uses: lyqht/generate-supabase-db-types-github-action@main
+      # - uses: supabase/setup-cli@v1
         with:
           version: latest
       - run: supabase init
