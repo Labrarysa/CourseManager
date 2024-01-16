@@ -36,7 +36,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { cn } from "@/lib/utils";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -73,8 +73,8 @@ export default function Home() {
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
       <Card className="w-[400px]">
         <CardHeader>
-          <CardTitle>حساب جديد</CardTitle>
-          <CardDescription>Start the journey with us today.</CardDescription>
+          <CardTitle>انشئ حساب جديد</CardTitle>
+          <CardDescription>انشئ حسابك بخطوات بسيطة وسهلة</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -101,13 +101,13 @@ export default function Home() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full name</FormLabel>
+                      <FormLabel>الإسم الثلاثي</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter your name..." {...field} />
+                        <Input placeholder="ادخل اسمك الثلاثي" {...field} />
                       </FormControl>
-                      <FormDescription>
+                      {/* <FormDescription>
                         This is your public display name.
-                      </FormDescription>
+                      </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -118,9 +118,9 @@ export default function Home() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>البريد الإلكتروني</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter your email..." {...field} />
+                        <Input placeholder="أدخل بريدك الإلكتروني" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -132,10 +132,10 @@ export default function Home() {
                   name="studentId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Student ID</FormLabel>
+                      <FormLabel>السجل المدني</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter your student id..."
+                          placeholder="ادخل رقم السجل المدني الخاص بك"
                           {...field}
                         />
                       </FormControl>
@@ -149,24 +149,38 @@ export default function Home() {
                   name="year"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Year of study</FormLabel>
+                      <FormLabel>الصف الدراسي</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a verified email to display" />
+                            <SelectValue placeholder="اختر الصف الدراسي الحالي" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {[10, 11, 12, 13].map((year) => {
-                            return (
-                              <SelectItem value={year.toString()} key={year}>
-                                Year {year}
-                              </SelectItem>
-                            );
-                          })}
+                          {[
+                            "الصف الأول الابتدائي",
+                            "الصف الثاني الابتدائي",
+                            "الصف الثالث الابتدائي",
+                            "الصف الرابع الابتدائي",
+                            "الصف الخامس الابتدائي",
+                            "الصف السادس الابتدائي",
+                            "الصف الأول المتوسط",
+                            "الصف الثاني المتوسط",
+                            "الصف الثالث المتوسط",
+                            "الصف الأول الثانوي",
+                            "الصف الثاني الثانوي",
+                            "الصف الثالث الثانوي",
+                          ].map((year, index) => (
+                            <SelectItem
+                              value={(index + 1).toString()}
+                              key={index}
+                            >
+                              {year}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -196,10 +210,10 @@ export default function Home() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>كلمة المرور</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter your password..."
+                          placeholder="ادخل كلمة المرور"
                           {...field}
                           type="password"
                         />
@@ -214,10 +228,10 @@ export default function Home() {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirm password</FormLabel>
+                      <FormLabel>تأكيد كلمة المرور</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Please confirm your password..."
+                          placeholder="أكد كلمة المرور الخاصة بك"
                           {...field}
                           type="password"
                         />
@@ -258,8 +272,8 @@ export default function Home() {
                     setFormStep(1);
                   }}
                 >
-                  Next Step
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  تقدم
+                  <ArrowLeft className="w-4 h-4 mr-2" />
                 </Button>
                 <Button
                   type="button"
