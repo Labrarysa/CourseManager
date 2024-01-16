@@ -60,14 +60,34 @@ export default function Home() {
   function onSubmit(data: Input) {
     if (data.confirmPassword !== data.password) {
       toast({
-        title: "Passwords do not match",
+        title: "كلمة المرور المدخلة غير متطابقة",
         variant: "destructive",
       });
       return;
     }
+
     alert(JSON.stringify(data, null, 4));
     console.log(data);
   }
+
+  const goToNextStep = () => {
+    switch (formStep) {
+      case 0:
+        form.trigger(["email", "name", "studentId", "year"]).then((valid) => {
+          if (valid) setFormStep(1);
+        });
+        break;
+      case 1:
+        form
+          .trigger(["fatherName", "fatherEmail", "fatherPhoneNumber"])
+          .then((valid) => {
+            if (valid) setFormStep(2);
+          });
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -188,21 +208,70 @@ export default function Home() {
                   )}
                 />
               </motion.div>
+              {/* Father's Information Fields */}
               <motion.div
                 className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
-                  // hidden: formStep == 0,
+                  hidden: formStep !== 1,
                 })}
-                // formStep == 0 -> translateX == 100%
-                // formStep == 1 -> translateX == 0
-                animate={{
-                  translateX: `${100 - formStep * 100}%`,
-                }}
-                style={{
-                  translateX: `${100 - formStep * 100}%`,
-                }}
-                transition={{
-                  ease: "easeInOut",
-                }}
+                animate={{ translateX: `${100 - formStep * 100}%` }}
+                transition={{ ease: "easeInOut" }}
+              >
+                {/* .trigger(["fatherName", "fatherEmail", "fatherPhoneNumber"]) */}
+
+                <FormField
+                  control={form.control}
+                  name="fatherName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>اسم ولي الأمر </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="ادخل اسم ولي الأمر الثلاثي "
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* email */}
+                <FormField
+                  control={form.control}
+                  name="fatherEmail"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>البريد الإلكتروني</FormLabel>
+                      <FormControl>
+                        <Input placeholder="أدخل بريدك الإلكتروني" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* student id */}
+                <FormField
+                  control={form.control}
+                  name="fatherPhoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>هاتف ولي الأمر</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder=" رقم الهاتف الخاص بولي الأمر"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
+              <motion.div
+                className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
+                  hidden: formStep !== 2,
+                })}
+                animate={{ translateX: `${-200 + formStep * 100}%` }}
+                transition={{ ease: "easeInOut" }}
               >
                 {/* password */}
                 <FormField
@@ -241,52 +310,31 @@ export default function Home() {
                   )}
                 />
               </motion.div>
+
+              {/* Buttons */}
               <div className="flex gap-2">
-                <Button
-                  type="submit"
-                  className={cn({
-                    hidden: formStep == 0,
-                  })}
-                >
-                  Submit
-                </Button>
-                <Button
-                  type="button"
-                  variant={"ghost"}
-                  className={cn({
-                    hidden: formStep == 1,
-                  })}
-                  onClick={() => {
-                    // validation
-                    form.trigger(["email", "name", "year", "studentId"]);
-                    const emailState = form.getFieldState("email");
-                    const nameState = form.getFieldState("name");
-                    const yearState = form.getFieldState("year");
-                    const idState = form.getFieldState("studentId");
+                {/* Submit Button - Visible only on the last step */}
+                {formStep === 2 && <Button type="submit">Submit</Button>}
 
-                    if (!emailState.isDirty || emailState.invalid) return;
-                    if (!nameState.isDirty || nameState.invalid) return;
-                    if (!yearState.isDirty || yearState.invalid) return;
-                    if (!idState.isDirty || idState.invalid) return;
+                {/* Next Step Button */}
+                {formStep < 2 && (
+                  <Button type="button" variant="ghost" onClick={goToNextStep}>
+                    Next Step
+                    <ArrowRight className="w-4 h-4 mr-2" />
+                  </Button>
+                )}
 
-                    setFormStep(1);
-                  }}
-                >
-                  تقدم
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                </Button>
-                <Button
-                  type="button"
-                  variant={"ghost"}
-                  onClick={() => {
-                    setFormStep(0);
-                  }}
-                  className={cn({
-                    hidden: formStep == 0,
-                  })}
-                >
-                  Go Back
-                </Button>
+                {/* Go Back Button */}
+                {formStep > 0 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() => setFormStep(formStep - 1)}
+                  >
+                    Go Back
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                  </Button>
+                )}
               </div>
             </form>
           </Form>
