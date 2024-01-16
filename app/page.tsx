@@ -73,7 +73,7 @@ export default function Home() {
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
       <Card className="w-[400px]">
         <CardHeader>
-          <CardTitle>Register</CardTitle>
+          <CardTitle>حساب جديد</CardTitle>
           <CardDescription>Start the journey with us today.</CardDescription>
         </CardHeader>
         <CardContent>
