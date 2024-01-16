@@ -319,7 +319,7 @@ export default function Home() {
                 {/* Next Step Button */}
                 {formStep < 2 && (
                   <Button type="button" variant="ghost" onClick={goToNextStep}>
-                    Next Step
+                    الخطوة التالية
                     <ArrowRight className="w-4 h-4 mr-2" />
                   </Button>
                 )}
@@ -331,7 +331,7 @@ export default function Home() {
                     variant="ghost"
                     onClick={() => setFormStep(formStep - 1)}
                   >
-                    Go Back
+                    عودة
                     <ArrowLeft className="w-4 h-4 mr-2" />
                   </Button>
                 )}
