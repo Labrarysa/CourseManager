@@ -16,6 +16,6 @@ export const registerSchema = z.object({
       message: "يجب أن يحتوي السجل المدني على أرقام فقط وباللغة الإنجليزية",
     }),
   year: z.string().min(1, { message: "يجب اختيار الصف الدراسي " }).max(30),
-  password: z.string().min(6).max(100),
-  confirmPassword: z.string().min(6).max(100),
+  password: z.string().min(6, { message: "يجب أن تحتوي كلمة المرور على ٧ ارقام على الأقل" }).max(100),
+  confirmPassword: z.string().min(6,  { message: "يجب أن تحتوي كلمة المرور على ٧ ارقام على الأقل" }).max(100),
 });
