@@ -71,7 +71,7 @@ export default function Home() {
 
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-      <Card className="w-[350px]">
+      <Card className="w-[400px]">
         <CardHeader>
           <CardTitle>Register</CardTitle>
           <CardDescription>Start the journey with us today.</CardDescription>
@@ -175,7 +175,7 @@ export default function Home() {
                 />
               </motion.div>
               <motion.div
-                className={cn("space-y-3 absolute top-0 left-0 right-0", {
+                className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
                   // hidden: formStep == 0,
                 })}
                 // formStep == 0 -> translateX == 100%
