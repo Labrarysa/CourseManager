@@ -262,10 +262,7 @@ export default function Home() {
                     <FormItem>
                       <FormLabel>هاتف ولي الأمر</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder=" رقم الهاتف الخاص بولي الأمر"
-                          {...field}
-                        />
+                        <Input placeholder="05xxxxxxxx" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
