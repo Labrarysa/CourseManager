@@ -95,7 +95,7 @@ export default function Home() {
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
       <Card className=" md:w-[420px] w-[350px]">
-        <CardHeader className="pt-10">
+        <CardHeader className="pt-10 text-center">
           <CardTitle>انشئ حساب جديد</CardTitle>
           <CardDescription>انشئ حسابك بخطوات بسيطة وسهلة</CardDescription>
         </CardHeader>
@@ -315,7 +315,7 @@ export default function Home() {
               </motion.div>
 
               {/* Buttons */}
-              <div className="flex gap-2">
+              <div className="flex justify-center gap-2">
                 {/* Go Back Button */}
                 {formStep > 0 && (
                   <Button
@@ -323,21 +323,25 @@ export default function Home() {
                     variant="ghost"
                     onClick={() => setFormStep(formStep - 1)}
                   >
+                    <ArrowRight className="w-4 h-4 ml-2" />
                     عودة
-                    <ArrowRight className="w-4 h-4 mr-2" />
                   </Button>
                 )}
 
                 {/* Next Step Button */}
                 {formStep < 2 && (
                   <Button type="button" variant="ghost" onClick={goToNextStep}>
-                    الخطوة التالية
+                    تقدم
                     <ArrowLeft className="w-4 h-4 mr-2" />
                   </Button>
                 )}
 
                 {/* Submit Button - Visible only on the last step */}
-                {formStep === 2 && <Button type="submit">انهاء</Button>}
+                {formStep === 2 && (
+                  <Button type="submit" className=" size-md">
+                    انهاء
+                  </Button>
+                )}
               </div>
             </form>
           </Form>
