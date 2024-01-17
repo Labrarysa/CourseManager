@@ -21,14 +21,12 @@ export const registerSchema = z.object({
   fatherName: z.string()
   .min(7, { message: "اكتب اسم ولي الأمر الثلاثي كاملاً" })
   .max(255),
-      fatherEmail: z.string().email({
-        message:"الإيميل المدخل غير صحيح"
-      }),
-      fatherPhoneNumber:z
-      .string()
-      .min(10, {message:"يجب أن يكون رقم الهاتف من ١٠ أرقام وباللغة الإنجليزية فقط"})
-      .max(10)
-      .refine((val) => !isNaN(val as unknown as number), {
-        message: "يجب أن يتكون رقم الهاتف من أرقام فقط وباللغة الإنجليزية",
-      }),
+    fatherEmail: z.string().email({message:"الإيميل المدخل غير صحيح" }),
+    fatherPhoneNumber: z
+    .string()
+    .min(10, {message:"يجب أن يكون رقم الهاتف من ١٠ أرقام وباللغة الإنجليزية فقط"})
+    .max(10)
+    .refine((val) => !isNaN(val as unknown as number), {
+    message: "يجب أن يتكون رقم الهاتف من أرقام فقط وباللغة الإنجليزية",
+    }),
 });

@@ -91,8 +91,8 @@ export default function Home() {
 
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-      <Card className="w-[400px]">
-        <CardHeader>
+      <Card className=" md:w-[420px] w-[350px]">
+        <CardHeader className="pt-10">
           <CardTitle>انشئ حساب جديد</CardTitle>
           <CardDescription>انشئ حسابك بخطوات بسيطة وسهلة</CardDescription>
         </CardHeader>
