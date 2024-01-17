@@ -54,6 +54,9 @@ export default function Home() {
       password: "",
       studentId: "",
       year: "",
+      fatherName: "",
+      fatherEmail: "",
+      fatherPhoneNumber: "",
     },
   });
 
