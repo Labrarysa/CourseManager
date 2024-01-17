@@ -98,7 +98,7 @@ export default function Home() {
 
   return (
     // Centering the card on the screen using absolute positioning
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+    <div className="flex items-center justify-center h-screen">
       {/* Card component that contains the form */}
       <Card className="md:w-[420px] w-[350px]">
         {/* Card header with title and description */}
