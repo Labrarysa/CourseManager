@@ -36,6 +36,8 @@ import {
     return (
       // Positioning the table in the center of the page
       <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+        {/* Scrollable container for the table on smaller screens */}
+        <div className="table-auto md:w-full w-[300px]">
         {/* Table for displaying student data */}
         <Table className="min-w-full text-center">
           {/* Table caption showing the total number of students */}
@@ -76,6 +78,7 @@ import {
             ))}
           </TableBody>
         </Table>
+      </div>
       </div>
     );
   }
