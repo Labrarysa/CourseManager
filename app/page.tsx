@@ -109,7 +109,7 @@ export default function Home() {
                 // formStep == 0 -> translateX == 0
                 // formStep == 1 -> translateX == '-100%'
                 animate={{
-                  translateX: `-${formStep * 100}%`,
+                  translateX: `${formStep * 100}%`,
                 }}
                 transition={{
                   ease: "easeInOut",
@@ -213,7 +213,7 @@ export default function Home() {
                 className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
                   hidden: formStep !== 1,
                 })}
-                animate={{ translateX: `${100 - formStep * 100}%` }}
+                animate={{ translateX: `-${100 - formStep * 100}%` }}
                 transition={{ ease: "easeInOut" }}
               >
                 {/* .trigger(["fatherName", "fatherEmail", "fatherPhoneNumber"]) */}
@@ -313,17 +313,6 @@ export default function Home() {
 
               {/* Buttons */}
               <div className="flex gap-2">
-                {/* Submit Button - Visible only on the last step */}
-                {formStep === 2 && <Button type="submit">Submit</Button>}
-
-                {/* Next Step Button */}
-                {formStep < 2 && (
-                  <Button type="button" variant="ghost" onClick={goToNextStep}>
-                    الخطوة التالية
-                    <ArrowRight className="w-4 h-4 mr-2" />
-                  </Button>
-                )}
-
                 {/* Go Back Button */}
                 {formStep > 0 && (
                   <Button
@@ -332,9 +321,20 @@ export default function Home() {
                     onClick={() => setFormStep(formStep - 1)}
                   >
                     عودة
+                    <ArrowRight className="w-4 h-4 mr-2" />
+                  </Button>
+                )}
+
+                {/* Next Step Button */}
+                {formStep < 2 && (
+                  <Button type="button" variant="ghost" onClick={goToNextStep}>
+                    الخطوة التالية
                     <ArrowLeft className="w-4 h-4 mr-2" />
                   </Button>
                 )}
+
+                {/* Submit Button - Visible only on the last step */}
+                {formStep === 2 && <Button type="submit">انهاء</Button>}
               </div>
             </form>
           </Form>
