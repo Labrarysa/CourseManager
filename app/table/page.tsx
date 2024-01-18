@@ -1,4 +1,5 @@
-// Importing table components from your UI component library
+"use client";
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -9,8 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// Static data for students - this would typically come from a database
-const students = [
+// Initial static data for students
+const initialStudents = [
   {
     number: 1,
     name: "حسن عبدالحميد العبدالعال",
@@ -30,6 +31,8 @@ const students = [
 ];
 
 export default function Home() {
+  // useState hook to manage student data
+  const [students, setStudents] = useState(initialStudents);
   // Calculate the number of students for display in the table caption
   const studentCount = students.length;
 
