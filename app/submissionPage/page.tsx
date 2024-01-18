@@ -18,7 +18,7 @@ const SubmissionPage = () => {
         {/* Message content */}
         <CardTitle>شكرًا لك!</CardTitle>
         <CardDescription>
-          تمّ وصول ردّك، يمكنك المتابعة للصفحة الرئيسة او مشاهدة النتيجة.
+          تمّ وصول ردّك، يمكنك المتابعة لصفحة الحلقة او مشاهدة النتيجة.
         </CardDescription>
         {/* Card actions (buttons) */}
         <CardContent className="flex flex-row gap-2 px-0 pt-6 pb-0">
