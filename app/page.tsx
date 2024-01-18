@@ -35,9 +35,32 @@ import React from "react";
 import { cn } from "@/lib/utils"; // Utility function for conditional classnames
 import { ArrowLeft, ArrowRight } from "lucide-react"; // Icon components
 import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast notifications
+import { createClient } from "@/utils/supabse/client";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
+
+type FormInput = {
+  user_key: string;
+  form_id: string;
+  questions: { question_id: string; answer: string }[];
+};
+
+/**
+ * Add new form result to the database.
+ * @param formInput All data should be inserted.
+ */
+async function addFormResult({ form_id, questions, user_key }: FormInput) {
+  const supabase = createClient();
+  for (const question of questions) {
+    await supabase.from("form_results").insert({
+      form_id,
+      question_id: question.question_id,
+      answer: question.answer,
+      user_key,
+    });
+  }
+}
 
 export default function Home() {
   const { toast } = useToast();
