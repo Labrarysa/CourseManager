@@ -36,6 +36,7 @@ import { cn } from "@/lib/utils"; // Utility function for conditional classnames
 import { ArrowLeft, ArrowRight } from "lucide-react"; // Icon components
 import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast notifications
 import { createClient } from "@/utils/supabse/client";
+import { useMutation } from "@tanstack/react-query";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
@@ -81,9 +82,10 @@ export default function Home() {
       fatherPhoneNumber: "",
     },
   });
+  const { mutate } = useMutation({ mutationFn: addFormResult });
 
   // Function to handle form submission
-  function onSubmit(data: Input) {
+  async function onSubmit(data: Input) {
     // Custom validation for password confirmation
     if (data.confirmPassword !== data.password) {
       toast({
@@ -93,6 +95,27 @@ export default function Home() {
       return;
     }
 
+    // TODO: This is a muck data so we need to change here after we make form creation page.
+    mutate({
+      form_id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+      user_key: "2412001",
+      questions: [
+        {
+          question_id: "dddddddd-dddd-dddd-dddd-dddddddddddd",
+          answer: data.name,
+        },
+        {
+          question_id: "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
+          answer: data.email,
+        },
+        {
+          question_id: "ffffffff-ffff-ffff-ffff-ffffffffffff",
+          answer: data.studentId,
+        },
+      ],
+    });
+
+    // TODO: replace this with router.push to the submission page.
     // Alert and log the submitted data (for demonstration purposes)
     alert(JSON.stringify(data, null, 4));
     console.log(data);
