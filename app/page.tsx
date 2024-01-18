@@ -1,26 +1,24 @@
+// Use the client-only imports for the Next.js framework
 "use client";
 
-import { Inter } from "next/font/google";
+// Importing necessary UI components and hooks from the project's designated paths
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // For smooth animations
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -28,36 +26,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { registerSchema } from "@/validators/auth";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form"; // Hook for managing form state
+import { registerSchema } from "@/validators/auth"; // Zod schema for form validation
+import { z } from "zod"; // Zod library for schema definition
+import { zodResolver } from "@hookform/resolvers/zod"; // Resolver to integrate Zod with react-hook-form
 import React from "react";
-import { cn } from "@/lib/utils";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils"; // Utility function for conditional classnames
+import { ArrowLeft, ArrowRight } from "lucide-react"; // Icon components
+import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast notifications
 
-const inter = Inter({ subsets: ["latin"] });
+// Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
 
 export default function Home() {
   const { toast } = useToast();
-  const [formStep, setFormStep] = React.useState(0);
+  const [formStep, setFormStep] = React.useState(0); // State to manage the current step of the form
+  // useForm hook initialization with Zod schema for validation
   const form = useForm<Input>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      // Define default form field values
       confirmPassword: "",
       email: "",
       name: "",
       password: "",
       studentId: "",
       year: "",
+      fatherName: "",
+      fatherEmail: "",
+      fatherPhoneNumber: "",
     },
   });
 
+  // Function to handle form submission
   function onSubmit(data: Input) {
+    // Custom validation for password confirmation
     if (data.confirmPassword !== data.password) {
       toast({
         title: "كلمة المرور المدخلة غير متطابقة",
@@ -66,11 +70,14 @@ export default function Home() {
       return;
     }
 
+    // Alert and log the submitted data (for demonstration purposes)
     alert(JSON.stringify(data, null, 4));
     console.log(data);
   }
 
+  // Function to advance to the next form step
   const goToNextStep = () => {
+    // Perform validation checks for each step
     switch (formStep) {
       case 0:
         form.trigger(["email", "name", "studentId", "year"]).then((valid) => {
@@ -90,32 +97,35 @@ export default function Home() {
   };
 
   return (
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-      <Card className="w-[400px]">
-        <CardHeader>
+    // Centering the card on the screen using absolute positioning
+    <div className="flex items-center justify-center h-screen">
+      {/* Card component that contains the form */}
+      <Card className="md:w-[420px] w-[350px]">
+        {/* Card header with title and description */}
+        <CardHeader className="pt-10 text-center">
+
           <CardTitle>انشئ حساب جديد</CardTitle>
           <CardDescription>انشئ حسابك بخطوات بسيطة وسهلة</CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Form component */}
           <Form {...form}>
+            {/* Form element with submission handler */}
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="relative space-y-3 overflow-x-hidden"
             >
+              {/* Animated container for form fields */}
               <motion.div
-                className={cn("space-y-3", {
-                  // hidden: formStep == 1,
-                })}
-                // formStep == 0 -> translateX == 0
-                // formStep == 1 -> translateX == '-100%'
+                className={cn("space-y-3")}
                 animate={{
-                  translateX: `-${formStep * 100}%`,
+                  translateX: `${formStep * 100}%`,
                 }}
                 transition={{
                   ease: "easeInOut",
                 }}
               >
-                {/* name */}
+                {/* Name field */}
                 <FormField
                   control={form.control}
                   name="name"
@@ -125,9 +135,6 @@ export default function Home() {
                       <FormControl>
                         <Input placeholder="ادخل اسمك الثلاثي" {...field} />
                       </FormControl>
-                      {/* <FormDescription>
-                        This is your public display name.
-                      </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -208,16 +215,16 @@ export default function Home() {
                   )}
                 />
               </motion.div>
+
               {/* Father's Information Fields */}
               <motion.div
                 className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
                   hidden: formStep !== 1,
                 })}
-                animate={{ translateX: `${100 - formStep * 100}%` }}
+                animate={{ translateX: `-${100 - formStep * 100}%` }}
                 transition={{ ease: "easeInOut" }}
               >
-                {/* .trigger(["fatherName", "fatherEmail", "fatherPhoneNumber"]) */}
-
+                {/* father's name */}
                 <FormField
                   control={form.control}
                   name="fatherName"
@@ -248,7 +255,7 @@ export default function Home() {
                     </FormItem>
                   )}
                 />
-                {/* student id */}
+                {/* father's phone number */}
                 <FormField
                   control={form.control}
                   name="fatherPhoneNumber"
@@ -256,10 +263,7 @@ export default function Home() {
                     <FormItem>
                       <FormLabel>هاتف ولي الأمر</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder=" رقم الهاتف الخاص بولي الأمر"
-                          {...field}
-                        />
+                        <Input placeholder="05xxxxxxxx" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -311,19 +315,8 @@ export default function Home() {
                 />
               </motion.div>
 
-              {/* Buttons */}
-              <div className="flex gap-2">
-                {/* Submit Button - Visible only on the last step */}
-                {formStep === 2 && <Button type="submit">Submit</Button>}
-
-                {/* Next Step Button */}
-                {formStep < 2 && (
-                  <Button type="button" variant="ghost" onClick={goToNextStep}>
-                    الخطوة التالية
-                    <ArrowRight className="w-4 h-4 mr-2" />
-                  </Button>
-                )}
-
+              {/* Navigation buttons */}
+              <div className="flex justify-center gap-2">
                 {/* Go Back Button */}
                 {formStep > 0 && (
                   <Button
@@ -331,8 +324,23 @@ export default function Home() {
                     variant="ghost"
                     onClick={() => setFormStep(formStep - 1)}
                   >
+                    <ArrowRight className="w-4 h-4 ml-2" />
                     عودة
+                  </Button>
+                )}
+
+                {/* Next Step Button */}
+                {formStep < 2 && (
+                  <Button type="button" variant="ghost" onClick={goToNextStep}>
+                    تقدم
                     <ArrowLeft className="w-4 h-4 mr-2" />
+                  </Button>
+                )}
+
+                {/* Submit Button - Visible only on the last step */}
+                {formStep === 2 && (
+                  <Button type="submit" className=" size-md">
+                    انهاء
                   </Button>
                 )}
               </div>
