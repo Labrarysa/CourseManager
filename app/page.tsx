@@ -35,7 +35,7 @@ import React from "react";
 import { cn } from "@/lib/utils"; // Utility function for conditional classnames
 import { ArrowLeft, ArrowRight } from "lucide-react"; // Icon components
 import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast notifications
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
