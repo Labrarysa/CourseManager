@@ -136,19 +136,18 @@ export default function Home() {
   const goToNextStep = () => {
     // Perform validation checks for each step
     switch (formStep) {
+      case 0:
+        setFormStep(1);
+        break;
       case 1:
-        form
-          .trigger(["fatherName", "name", "studentId", "year"])
-          .then((valid) => {
-            if (valid) setFormStep(1);
-          });
+        form.trigger(["name", "year"]).then((valid) => {
+          if (valid) setFormStep(2);
+        });
         break;
       case 2:
-        form
-          .trigger(["fatherName", "fatherEmail", "fatherPhoneNumber"])
-          .then((valid) => {
-            if (valid) setFormStep(2);
-          });
+        form.trigger(["fatherEmail", "fatherPhoneNumber"]).then((valid) => {
+          if (valid) setFormStep(3);
+        });
         break;
       default:
         break;
@@ -171,7 +170,7 @@ export default function Home() {
             {/* Form element with submission handler */}
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="relative space-y-3 overflow-x-hidden"
+              className="relative space-y-3 overflow-x-hidden  h-[250px]"
             >
               {/* Animated container for form fields */}
               <motion.div
@@ -185,7 +184,10 @@ export default function Home() {
               >
                 <AlertDialog>
                   <AlertDialogTrigger className="w-full text-center text-blue-500 ">
-                    اضغط هنا لبدأ عملية التسجيل
+                    <span className="underline transition-all duration-300 hover:text-blue-700 ">
+                      اضغط هنا
+                    </span>{" "}
+                    لبدأ عملية التسجيل
                   </AlertDialogTrigger>
                   <AlertDialogContent className="flex flex-col items-center justify-center w-full text-center">
                     <AlertDialogHeader>
@@ -203,7 +205,13 @@ export default function Home() {
                       <AlertDialogCancel onClick={goToNextStep}>
                         لا
                       </AlertDialogCancel>
-                      <AlertDialogAction>نعم</AlertDialogAction>
+                      <AlertDialogAction
+                        onClick={() => {
+                          router.push("/form-submission");
+                        }}
+                      >
+                        نعم
+                      </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -287,41 +295,6 @@ export default function Home() {
                 animate={{ translateX: `${-200 + formStep * 100}%` }}
                 transition={{ ease: "easeInOut" }}
               >
-                {/* <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>كلمة المرور</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="ادخل كلمة المرور"
-                          {...field}
-                          type="password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>تأكيد كلمة المرور</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="أكد كلمة المرور الخاصة بك"
-                          {...field}
-                          type="password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
-
                 {/* email */}
                 <FormField
                   control={form.control}
