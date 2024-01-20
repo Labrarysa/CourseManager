@@ -1,5 +1,4 @@
 // "use client";
-// import React, { useState } from 'react';
 // import {
 //   Table,
 //   TableBody,
@@ -96,6 +95,7 @@
 // }
 
 
+import React, { useState } from 'react';
 import { student, columns } from "./column"
 import { DataTable } from "./data-table"
 
