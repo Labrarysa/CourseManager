@@ -35,11 +35,13 @@ import React from "react";
 import { cn } from "@/lib/utils"; // Utility function for conditional classnames
 import { ArrowLeft, ArrowRight } from "lucide-react"; // Icon components
 import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast notifications
+import { useRouter } from 'next/navigation' // To navigate to other pages
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
 
 export default function Home() {
+  const router = useRouter();
   const { toast } = useToast();
   const [formStep, setFormStep] = React.useState(0); // State to manage the current step of the form
   // useForm hook initialization with Zod schema for validation
@@ -70,9 +72,8 @@ export default function Home() {
       return;
     }
 
-    // Alert and log the submitted data (for demonstration purposes)
-    alert(JSON.stringify(data, null, 4));
-    console.log(data);
+    // Navigate to form submission page
+    router.push('/form-submission');
   }
 
   // Function to advance to the next form step
