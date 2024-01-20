@@ -101,13 +101,10 @@ export default function Home() {
   // Function to handle form submission
   async function onSubmit(data: Input) {
     // Custom validation for password confirmation
-    if (data.confirmPassword !== data.password) {
-      toast({
-        title: "كلمة المرور المدخلة غير متطابقة",
-        variant: "destructive",
-      });
-      return;
-    }
+    toast({
+      title: "كلمة المرور المدخلة غير متطابقة",
+      variant: "destructive",
+    });
 
     mutate({
       form_id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
@@ -119,11 +116,11 @@ export default function Home() {
         },
         {
           question_id: "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
-          answer: data.email,
+          answer: data.fatherEmail,
         },
         {
           question_id: "ffffffff-ffff-ffff-ffff-ffffffffffff",
-          answer: data.studentId,
+          answer: data.year,
         },
       ],
     });
@@ -170,7 +167,7 @@ export default function Home() {
             {/* Form element with submission handler */}
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="relative space-y-3 overflow-x-hidden  h-[250px]"
+              className="relative space-y-3 overflow-x-hidden"
             >
               {/* Animated container for form fields */}
               <motion.div
@@ -219,7 +216,7 @@ export default function Home() {
 
               {/* Father's Information Fields */}
               <motion.div
-                className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
+                className={cn("space-y-3 relative top-0 left-0 right-0 px-2", {
                   hidden: formStep !== 1,
                 })}
                 animate={{ translateX: `-${100 - formStep * 100}%` }}
@@ -289,7 +286,7 @@ export default function Home() {
                 />
               </motion.div>
               <motion.div
-                className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
+                className={cn("space-y-3 relative top-0 left-0 right-0 px-2", {
                   hidden: formStep !== 2,
                 })}
                 animate={{ translateX: `${-200 + formStep * 100}%` }}
@@ -326,7 +323,7 @@ export default function Home() {
               </motion.div>
 
               {/* Navigation buttons */}
-              <div className="flex justify-center gap-2">
+              <div className="flex justify-center gap-2 pt-3">
                 {/* Go Back Button */}
                 {formStep > 0 && (
                   <Button
