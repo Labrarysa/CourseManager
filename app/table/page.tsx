@@ -1,318 +1,137 @@
-"use client"
+// "use client";
+// import React, { useState } from 'react';
+// import {
+//   Table,
+//   TableBody,
+//   TableCaption,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
 
-import * as React from "react"
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons"
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
+// // Initial static data for students
+// const initialStudents = [
+//   {
+    // studentId: "241001",
+    // name: "حسن عبدالحميد العبدالعال",
+    // dateOfBirth: "12/03/2009",
+    // age: "15",
+    // fatherPhone: "0559763547",
+    // studentPhone: "-",
+    // email: "Hsoonxx@gmail.com",
+    // year: "الأول ثانوي",
+//   },
+//   {
+    // studentId: "-",
+    // name: "عبدالله علي المطاوعه",
+    // dateOfBirth: "23/10/2007",
+    // age: "17",
+    // fatherPhone: "0559763547",
+    // studentPhone: "055948567",
+    // email: "-",
+    // year: "الثالث ثانوي",
+//   },
+// ];
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+// export default function Home() {
+//   // useState hook to manage student data
+//   const [students, setStudents] = useState(initialStudents);
+//   // Calculate the number of students for display in the table caption
+//   const studentCount = students.length;
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-]
+//   return (
+//     // Positioning the table in the center of the page
+//     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+//       {/* Scrollable container for the table on smaller screens */}
+//       <div className="table-auto md:w-full w-[300px]">
+//       {/* Table for displaying student data */}
+//       <Table className="min-w-full text-center">
+//         {/* Table caption showing the total number of students */}
+//         <TableCaption className="text-xl font-semibold py-2">
+//           {`عدد الطلاب: ${studentCount}`}
+//         </TableCaption>
 
-export type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
+//         {/* Table header with column titles */}
+//         <TableHeader className="text-sm text-center">
+//           {/* Row for the main title spanning all columns */}
+          // <TableRow className="text-xl font-semibold py-2">
+          //   <TableHead colSpan={8} className="text-center">كشف أسماء الطلاب</TableHead>
+          // </TableRow>
+
+//           {/* Row for column headings */}
+//           <TableRow>
+//             <TableHead className="text-center">الرقم الأكاديمي</TableHead>
+//             <TableHead className="text-center">الاسم الثلاثي</TableHead>
+//             <TableHead className="text-center">تاريخ الميلاد</TableHead>
+//             <TableHead className="text-center">العمر</TableHead>
+//             <TableHead className="text-center">رقم جوال ولي الأمر</TableHead>
+//             <TableHead className="text-center">رقم جوال الطالب</TableHead>
+//             <TableHead className="text-center">البريد الالكتروني</TableHead>
+//             <TableHead className="text-center">المرحلة الدراسية</TableHead>
+            
+//           </TableRow>
+//         </TableHeader>
+
+//         {/* Table body with data rows */}
+//         <TableBody className="divide-y">
+//           {students.map((student) => (
+//             // Row for each student's data
+//             <TableRow className="text-sm text-center" key={student.studentId}>
+//               <TableCell className="py-2 px-4">{student.studentId}</TableCell>
+//               <TableCell className="py-2 px-4">{student.name}</TableCell>
+//               <TableCell className="py-2 px-4">{student.dateOfBirth}</TableCell>
+//               <TableCell className="py-2 px-4">{student.age}</TableCell>
+//               <TableCell className="py-2 px-4">{student.fatherPhone}</TableCell>
+//               <TableCell className="py-2 px-4">{student.studentPhone}</TableCell>
+//               <TableCell className="py-2 px-4">{student.email}</TableCell>
+//               <TableCell className="py-2 px-4">{student.year}</TableCell>
+//             </TableRow>
+//           ))}
+//         </TableBody>
+//       </Table>
+//     </div>
+//     </div>
+//   );
+// }
+
+
+import { student, columns } from "./column"
+import { DataTable } from "./data-table"
+
+async function getData(): Promise<student[]> {
+  // Fetch data from your API here.
+  return [
+    {
+      studentId: "241001",
+      name: "حسن عبدالحميد العبدالعال",
+      dateOfBirth: "12/03/2009",
+      age: "15",
+      fatherPhone: "0559763547",
+      studentPhone: "-",
+      email: "Hsoonxx@gmail.com",
+      year: "الأول ثانوي",
+      status: "مقبول",
+    },
+    {    studentId: "-",
+    name: "عبدالله علي المطاوعه",
+    dateOfBirth: "23/10/2007",
+    age: "17",
+    fatherPhone: "0559763547",
+    studentPhone: "055948567",
+    email: "-",
+    year: "الثالث ثانوي",
+    status: "انتظار",
+  },
+  ]
 }
 
-export const columns: ColumnDef<Payment>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
-
-      return <div className="text-right font-medium">{formatted}</div>
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
-]
-
-function DataTableDemo() {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
-
-  const table = useReactTable({
-    data,
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
-  })
+export default async function DemoPage() {
+  const data = await getData()
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
     </div>
   )
 }
-
-export default DataTableDemo;
