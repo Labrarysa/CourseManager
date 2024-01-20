@@ -8,17 +8,20 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
+
   CardTitle,
 } from "@/components/ui/card";
 
 const SubmissionPage = () => {
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+
       <Card className="p-6 space-y-2">
         {/* Message content */}
         <CardTitle>شكرًا لك!</CardTitle>
         <CardDescription>
           تمّ وصول ردّك، يمكنك المتابعة للصفحة الرئيسة او مشاهدة الرد.
+
         </CardDescription>
         {/* Card actions (buttons) */}
         <CardContent className="flex flex-row gap-2 px-0 pt-6 pb-0">
@@ -29,6 +32,7 @@ const SubmissionPage = () => {
           {/* Result Button - Should show the user his answers to the form along with the result */}
           <Button asChild variant="secondary">
             <Link href="/">مشاهدة الرد</Link>
+
           </Button>
         </CardContent>
       </Card>
@@ -37,3 +41,4 @@ const SubmissionPage = () => {
 };
 
 export default SubmissionPage;
+

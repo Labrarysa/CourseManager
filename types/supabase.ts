@@ -11,31 +11,31 @@ export interface Database {
     Tables: {
       form_results: {
         Row: {
+          answer: string | null
           form_id: string | null
           id: string
-          non_user_id: number | null
           question_id: string | null
           submission_timestamp: string | null
-          user_answer: string | null
           user_id: string | null
+          user_key: string | null
         }
         Insert: {
+          answer?: string | null
           form_id?: string | null
           id?: string
-          non_user_id?: number | null
           question_id?: string | null
           submission_timestamp?: string | null
-          user_answer?: string | null
           user_id?: string | null
+          user_key?: string | null
         }
         Update: {
+          answer?: string | null
           form_id?: string | null
           id?: string
-          non_user_id?: number | null
           question_id?: string | null
           submission_timestamp?: string | null
-          user_answer?: string | null
           user_id?: string | null
+          user_key?: string | null
         }
         Relationships: [
           {
