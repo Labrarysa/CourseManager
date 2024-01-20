@@ -26,6 +26,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form"; // Hook for managing form state
 import { registerSchema } from "@/validators/auth"; // Zod schema for form validation
@@ -35,7 +47,7 @@ import React from "react";
 import { cn } from "@/lib/utils"; // Utility function for conditional classnames
 import { ArrowLeft, ArrowRight } from "lucide-react"; // Icon components
 import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast notifications
-import { useRouter } from 'next/navigation' // To navigate to other pages
+import { useRouter } from "next/navigation"; // To navigate to other pages
 import { createClient } from "@/utils/supabse/client";
 import { useMutation } from "@tanstack/react-query";
 
@@ -96,7 +108,7 @@ export default function Home() {
       });
       return;
     }
-    
+
     mutate({
       form_id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
       user_key: "2412001",
@@ -117,19 +129,21 @@ export default function Home() {
     });
 
     // Navigate to form submission page
-    router.push('/form-submission');
+    router.push("/form-submission");
   }
 
   // Function to advance to the next form step
   const goToNextStep = () => {
     // Perform validation checks for each step
     switch (formStep) {
-      case 0:
-        form.trigger(["email", "name", "studentId", "year"]).then((valid) => {
-          if (valid) setFormStep(1);
-        });
-        break;
       case 1:
+        form
+          .trigger(["fatherName", "name", "studentId", "year"])
+          .then((valid) => {
+            if (valid) setFormStep(1);
+          });
+        break;
+      case 2:
         form
           .trigger(["fatherName", "fatherEmail", "fatherPhoneNumber"])
           .then((valid) => {
@@ -169,6 +183,40 @@ export default function Home() {
                   ease: "easeInOut",
                 }}
               >
+                <AlertDialog>
+                  <AlertDialogTrigger className="w-full text-center text-blue-500 ">
+                    اضغط هنا لبدأ عملية التسجيل
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="flex flex-col items-center justify-center w-full text-center">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        هل سبق للطالب التسجيل في الدورة مسبقاً ؟
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        إذا كنت قد شاركت في الدورة من قبل، يرجى الضغط على الزر{" "}
+                        <span className="font-bold">نعم</span>. وإذا كانت هذه
+                        مشاركتك الأولى، فقم بالضغط على الزر{" "}
+                        <span className="font-bold">لا</span>.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel onClick={goToNextStep}>
+                        لا
+                      </AlertDialogCancel>
+                      <AlertDialogAction>نعم</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </motion.div>
+
+              {/* Father's Information Fields */}
+              <motion.div
+                className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
+                  hidden: formStep !== 1,
+                })}
+                animate={{ translateX: `-${100 - formStep * 100}%` }}
+                transition={{ ease: "easeInOut" }}
+              >
                 {/* Name field */}
                 <FormField
                   control={form.control}
@@ -177,36 +225,8 @@ export default function Home() {
                     <FormItem>
                       <FormLabel>الإسم الثلاثي</FormLabel>
                       <FormControl>
-                        <Input placeholder="ادخل اسمك الثلاثي" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* email */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>البريد الإلكتروني</FormLabel>
-                      <FormControl>
-                        <Input placeholder="أدخل بريدك الإلكتروني" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* student id */}
-                <FormField
-                  control={form.control}
-                  name="studentId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>السجل المدني</FormLabel>
-                      <FormControl>
                         <Input
-                          placeholder="ادخل رقم السجل المدني الخاص بك"
+                          placeholder="ادخل اسم الطالب الثلاثي"
                           {...field}
                         />
                       </FormControl>
@@ -214,6 +234,7 @@ export default function Home() {
                     </FormItem>
                   )}
                 />
+
                 {/* year */}
                 <FormField
                   control={form.control}
@@ -259,32 +280,48 @@ export default function Home() {
                   )}
                 />
               </motion.div>
-
-              {/* Father's Information Fields */}
               <motion.div
                 className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
-                  hidden: formStep !== 1,
+                  hidden: formStep !== 2,
                 })}
-                animate={{ translateX: `-${100 - formStep * 100}%` }}
+                animate={{ translateX: `${-200 + formStep * 100}%` }}
                 transition={{ ease: "easeInOut" }}
               >
-                {/* father's name */}
-                <FormField
+                {/* <FormField
                   control={form.control}
-                  name="fatherName"
+                  name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>اسم ولي الأمر </FormLabel>
+                      <FormLabel>كلمة المرور</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="ادخل اسم ولي الأمر الثلاثي "
+                          placeholder="ادخل كلمة المرور"
                           {...field}
+                          type="password"
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>تأكيد كلمة المرور</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="أكد كلمة المرور الخاصة بك"
+                          {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                /> */}
+
                 {/* email */}
                 <FormField
                   control={form.control}
@@ -314,50 +351,6 @@ export default function Home() {
                   )}
                 />
               </motion.div>
-              <motion.div
-                className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
-                  hidden: formStep !== 2,
-                })}
-                animate={{ translateX: `${-200 + formStep * 100}%` }}
-                transition={{ ease: "easeInOut" }}
-              >
-                {/* password */}
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>كلمة المرور</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="ادخل كلمة المرور"
-                          {...field}
-                          type="password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* confirm password */}
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>تأكيد كلمة المرور</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="أكد كلمة المرور الخاصة بك"
-                          {...field}
-                          type="password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </motion.div>
 
               {/* Navigation buttons */}
               <div className="flex justify-center gap-2">
@@ -374,7 +367,7 @@ export default function Home() {
                 )}
 
                 {/* Next Step Button */}
-                {formStep < 2 && (
+                {formStep > 0 && formStep < 2 && (
                   <Button type="button" variant="ghost" onClick={goToNextStep}>
                     تقدم
                     <ArrowLeft className="w-4 h-4 mr-2" />
