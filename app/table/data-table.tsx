@@ -8,6 +8,8 @@ import {
   useReactTable,
   SortingState,
   getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table"
 
 import {
@@ -19,30 +21,49 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { Input } from "@/components/ui/input"
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
+
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     }
   })
   
 
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+      <div className="flex align-items: center">
+        <Input
+          placeholder="ابحث بالاسم ..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+        />
+      </div>
+
       <Table>
         <TableHeader>
         <TableRow className="text-xl font-semibold py-2">
