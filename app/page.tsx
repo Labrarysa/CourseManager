@@ -37,6 +37,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react"; // Icon components
 import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast notifications
 import { createClient } from "@/utils/supabse/client";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
@@ -64,6 +65,7 @@ async function addFormResult({ form_id, questions, user_key }: FormInput) {
 }
 
 export default function Home() {
+  const router = useRouter();
   const { toast } = useToast();
   const [formStep, setFormStep] = React.useState(0); // State to manage the current step of the form
   // useForm hook initialization with Zod schema for validation
@@ -94,8 +96,7 @@ export default function Home() {
       });
       return;
     }
-
-    // TODO: This is a muck data so we need to change here after we make form creation page.
+    
     mutate({
       form_id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
       user_key: "2412001",
@@ -115,10 +116,7 @@ export default function Home() {
       ],
     });
 
-    // TODO: replace this with router.push to the submission page.
-    // Alert and log the submitted data (for demonstration purposes)
-    alert(JSON.stringify(data, null, 4));
-    console.log(data);
+    router.push("/form-submission");
   }
 
   // Function to advance to the next form step
