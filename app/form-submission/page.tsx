@@ -11,12 +11,12 @@ import {
 
 const SubmissionPage = () => {
   return (
-    <div className="flex justify-center m-6">
+    <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
       <Card className="p-6 space-y-2">
         {/* Message content */}
         <CardTitle>شكرًا لك!</CardTitle>
         <CardDescription>
-          تمّ وصول ردّك، يمكنك المتابعة لصفحة الحلقة او مشاهدة النتيجة.
+          تمّ وصول ردّك، يمكنك المتابعة للصفحة الرئيسة او مشاهدة الرد.
         </CardDescription>
         {/* Card actions (buttons) */}
         <CardContent className="flex flex-row gap-2 px-0 pt-6 pb-0">
@@ -26,7 +26,7 @@ const SubmissionPage = () => {
           </Button>
           {/* Result Button - Should show the user his answers to the form along with the result */}
           <Button asChild variant="secondary">
-            <Link href="/">مشاهدة النتيجة</Link>
+            <Link href="/">مشاهدة الرد</Link>
           </Button>
         </CardContent>
       </Card>

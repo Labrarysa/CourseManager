@@ -35,9 +35,9 @@ import React from "react";
 import { cn } from "@/lib/utils"; // Utility function for conditional classnames
 import { ArrowLeft, ArrowRight } from "lucide-react"; // Icon components
 import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast notifications
+import { useRouter } from 'next/navigation' // To navigate to other pages
 import { createClient } from "@/utils/supabse/client";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
@@ -116,7 +116,8 @@ export default function Home() {
       ],
     });
 
-    router.push("/form-submission");
+    // Navigate to form submission page
+    router.push('/form-submission');
   }
 
   // Function to advance to the next form step
