@@ -157,7 +157,7 @@ export default function Home() {
       {/* Card component that contains the form */}
       <Card className="md:w-[420px] w-[350px]">
         {/* Card header with title and description */}
-        <CardHeader className="pt-10 text-center">
+        <CardHeader className="text-center">
           <CardTitle>انشئ حساب جديد</CardTitle>
           <CardDescription>انشئ حسابك بخطوات بسيطة وسهلة</CardDescription>
         </CardHeader>
@@ -180,7 +180,7 @@ export default function Home() {
                 }}
               >
                 <AlertDialog>
-                  <AlertDialogTrigger className="w-full text-center text-blue-500 ">
+                  <AlertDialogTrigger className="w-full pt-5 text-center text-blue-500 ">
                     <span className="underline transition-all duration-300 hover:text-blue-700 ">
                       اضغط هنا
                     </span>{" "}
