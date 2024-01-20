@@ -46,7 +46,7 @@ export function DataTable<TData, TValue>({
       <Table>
         <TableHeader>
         <TableRow className="text-xl font-semibold py-2">
-            <TableHead colSpan={9} className="text-center">كشف أسماء الطلاب</TableHead>
+            <TableHead colSpan={9} className="text-center">كشف أسماء المتقدمين</TableHead>
           </TableRow>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>

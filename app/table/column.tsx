@@ -39,7 +39,7 @@ export const columns: ColumnDef<student>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          العمر
+           العمر
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -63,6 +63,16 @@ export const columns: ColumnDef<student>[] = [
   },
   {
     accessorKey: "status",
-    header: "الحالة",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+           الحالة
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
 ]
