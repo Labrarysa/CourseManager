@@ -95,8 +95,6 @@ export default function Home() {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       // Define default form field values
-      // confirmPassword: "",
-      // email: "",
       name: "",
       year: "",
       date: "",
@@ -120,34 +118,62 @@ export default function Home() {
   const { mutate } = useMutation({ mutationFn: addFormResult });
 
   // Function to handle form submission
+  // Function to handle form submission
   async function onSubmit(data: Input) {
-    // Custom validation for password confirmation
-    toast({
-      title: "كلمة المرور المدخلة غير متطابقة",
-      variant: "destructive",
-    });
+    // Assuming that "mutate" actually performs the form submission logic
 
-    mutate({
-      form_id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-      user_key: "2412001",
-      questions: [
-        {
-          question_id: "dddddddd-dddd-dddd-dddd-dddddddddddd",
-          answer: data.name,
-        },
-        {
-          question_id: "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
-          answer: data.fatherEmail,
-        },
-        {
-          question_id: "ffffffff-ffff-ffff-ffff-ffffffffffff",
-          answer: data.year,
-        },
-      ],
-    });
+    if (age !== null && age < 5) {
+      toast({
+        title: "العمر يجب أن يكون 5 سنوات أو أكثر",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    // Navigate to form submission page
-    router.push("/form-submission");
+    mutate(
+      {
+        form_id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+        user_key: "2412001",
+        questions: [
+          {
+            question_id: "question_id_for_name",
+            answer: data.name,
+          },
+          {
+            question_id: "question_id_for_fatherEmail",
+            answer: data.fatherEmail,
+          },
+          {
+            question_id: "question_id_for_year",
+            answer: data.year,
+          },
+          {
+            question_id: "question_id_for_date",
+            answer: data.date,
+          },
+          {
+            question_id: "question_id_for_fatherPhoneNumber",
+            answer: data.fatherPhoneNumber,
+          },
+          // If you have other fields, continue to add them here
+        ],
+      },
+      {
+        onSuccess: () => {
+          // Navigate to form submission page only if mutation is successful
+          router.push("/form-submission");
+        },
+        onError: (error) => {
+          // Handle the error case, e.g., show a notification
+          toast({
+            title: "Error",
+            description:
+              error.message || "An error occurred while submitting the form.",
+            variant: "destructive",
+          });
+        },
+      }
+    );
   }
 
   // Function to advance to the next form step
@@ -158,8 +184,10 @@ export default function Home() {
         setFormStep(1);
         break;
       case 1:
-        form.trigger(["name", "year"]).then((valid) => {
-          if (valid) setFormStep(2);
+        form.trigger(["name", "year", "date"]).then((valid) => {
+          if (valid && age !== null) {
+            setFormStep(2);
+          }
         });
         break;
       case 2:

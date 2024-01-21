@@ -1,5 +1,16 @@
 import { z } from "zod";
 
+function calculateAge(birthdate: string): number {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
 export const registerSchema = z.object({
   email: z.string().email({
     message:"الإيميل المدخل غير صحيح"
@@ -8,8 +19,10 @@ export const registerSchema = z.object({
     .string()
     .min(7, { message: "اكتب اسمك الثلاثي كاملاً" })
     .max(255),
-  date: z.string(),
-  age: z.string(),
+date: z.string().min(1, { message: "  يجب ادخال تاريخ الميلاد " })
+    .refine((birthdate) => calculateAge(birthdate) >= 5, {
+      message: " يجب أن يكون العمر 5 سنوات أو أكثر",
+    }),    age: z.string(),
   year: z.string().min(1, { message: "يجب اختيار الصف الدراسي " }).max(30),
   password: z.string().min(6, { message: "يجب أن تحتوي كلمة المرور على ٧ ارقام على الأقل" }).max(100),
   confirmPassword: z.string().min(6,  { message: "يجب أن تحتوي كلمة المرور على ٧ ارقام على الأقل" }).max(100),
