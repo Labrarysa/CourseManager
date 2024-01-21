@@ -1,5 +1,6 @@
 "use client"
 
+// Importing necessary React and @tanstack/react-table components and hooks
 import * as React from "react"
 import {
   ColumnDef,
@@ -13,6 +14,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table"
 
+// Importing custom UI components for the table display
 import {
   Table,
   TableBody,
@@ -22,6 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+// Importing dropdown menu components for column visibility control
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -29,34 +32,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+// Importing input and button components
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
+// DataTableProps interface defines the shape of props accepted by DataTable
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-
+// DataTable component definition, using generics for flexibility
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  // State for sorting, column filters, column visibility, and row selection
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-  React.useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  // Initializing the table with provided columns and data, and the necessary configurations
   const table = useReactTable({
     data,
     columns,
@@ -75,43 +72,43 @@ export function DataTable<TData, TValue>({
     }
   })
 
+  // The rendered UI of the DataTable
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex items-center justify-between w-full mb-16">
-
-      <div className="flex items-end text-sm text-muted-foreground">
-        تم اختيار
-        <br />
-        {table.getFilteredSelectedRowModel().rows.length} من{" "}
-        {table.getFilteredRowModel().rows.length} 
+        {/* Displaying the count of selected and filtered rows */}
+        <div className="flex items-end text-sm text-muted-foreground">
+          تم اختيار
+          <br />
+          {table.getFilteredSelectedRowModel().rows.length} من{" "}
+          {table.getFilteredRowModel().rows.length} 
         </div>
 
+        {/* Search input for filtering rows by name */}
         <div className="flex justify-center">
-        <Input
-          placeholder="ابحث بالاسم ..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+          <Input
+            placeholder="ابحث بالاسم ..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
         </div>
 
+        {/* Dropdown menu for column visibility control */}
         <div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              تصنيف
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
-              .map((column) => {
-                return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                تصنيف
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => (
                   <DropdownMenuCheckboxItem
                     key={column.id}
                     className="capitalize"
@@ -122,17 +119,17 @@ export function DataTable<TData, TValue>({
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
+      </div>
 
-        </div>
-
+      {/* The table component with dynamic rows and columns */}
       <Table>
+        {/* Table header rendering */}
         <TableHeader>
-        <TableRow className="text-xl font-semibold py-2">
+          <TableRow className="text-xl font-semibold py-2">
             <TableHead colSpan={11} className="text-center font-bold text-black pb-5">كشف أسماء المتقدمين</TableHead>
           </TableRow>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -152,6 +149,7 @@ export function DataTable<TData, TValue>({
             </TableRow>
           ))}
         </TableHeader>
+        {/* Table body rendering */}
         <TableBody className="text-center">
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (

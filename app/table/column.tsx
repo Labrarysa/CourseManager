@@ -1,5 +1,6 @@
 "use client"
 
+// Import necessary components and libraries
 import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
@@ -12,8 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+// Type definition for 'student', specifying the structure of student data
 export type student = {
   studentId: string
   name: string
@@ -27,8 +27,10 @@ export type student = {
   class: string
 }
 
+// Definition of table columns for displaying student data
 export const columns: ColumnDef<student>[] = [
   
+  // Checkbox column for selecting rows
   {
     id: "select",
     header: ({ table }) => (
@@ -50,18 +52,22 @@ export const columns: ColumnDef<student>[] = [
     ),
   },
 
+  // Column for student ID
   {
     accessorKey: "studentId",
     header: "الرقم الأكاديمي",
   },
+  // Column for student name
   {
     accessorKey: "name",
     header: "الاسم الثلاثي",
   },
+  // Column for student's date of birth
   {
     accessorKey: "dateOfBirth",
     header: "تاريخ الميلاد",
   },
+  // Column for student's age with sorting functionality
   {
     accessorKey: "age",
     header: ({ column }) => {
@@ -76,22 +82,27 @@ export const columns: ColumnDef<student>[] = [
       )
     },
   },
+  // Column for father's phone number
   {
     accessorKey: "fatherPhone",
     header: "رقم جوال ولي الأمر",
   },
+  // Column for student's phone number
   {
     accessorKey: "studentPhone",
     header: "رقم جوال الطالب",
   },
+  // Column for student's email address
   {
     accessorKey: "email",
     header: "البريد الالكتروني",
   },
+  // Column for student's academic year
   {
     accessorKey: "year",
     header: "المرحلة الدراسية",
   },
+  // Column for student's status with sorting functionality
   {
     accessorKey: "status",
     header: ({ column }) => {
@@ -106,6 +117,7 @@ export const columns: ColumnDef<student>[] = [
       )
     },
   },
+  // Dropdown column for selecting student's class
   {
     accessorKey: "class",
     header: "الحَلقة ",
