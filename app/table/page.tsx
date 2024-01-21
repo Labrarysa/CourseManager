@@ -112,6 +112,7 @@ async function getData(): Promise<student[]> {
       email: "Hsoonxx@gmail.com",
       year: "الأول ثانوي",
       status: "انتظار",
+      class: "الحلقة الأولى"
     },
     {    studentId: "-",
     name: "عبدالله علي المطاوعه",
@@ -122,6 +123,7 @@ async function getData(): Promise<student[]> {
     email: "-",
     year: "الثالث ثانوي",
     status: "مقبول",
+    class: "الحلقة الثانية"
   },
   ]
 }

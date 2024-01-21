@@ -4,6 +4,13 @@ import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -17,6 +24,7 @@ export type student = {
   email: string
   year: string
   status: "انتظار" | "مقبول" 
+  class: string
 }
 
 export const columns: ColumnDef<student>[] = [
@@ -97,5 +105,22 @@ export const columns: ColumnDef<student>[] = [
         </Button>
       )
     },
+  },
+  {
+    accessorKey: "class",
+    header: "الحَلقة ",
+    cell: ({ cell }) => (
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Select class" value={cell.getValue()} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="الحلقة الأولى">الحلقة الأولى</SelectItem>
+          <SelectItem value="الحلقة الثانية">الحلقة الثانية</SelectItem>
+          <SelectItem value="الحلقة الثالثة">الحلقة الثالثة</SelectItem>
+          {/* Add more options here as needed */}
+        </SelectContent>
+      </Select>
+    )
   },
 ]

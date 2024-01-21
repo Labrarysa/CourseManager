@@ -31,6 +31,13 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -110,14 +117,16 @@ export function DataTable<TData, TValue>({
         </div>
         
         <div className="flex-1 text-sm text-muted-foreground">
+        تم اختيار
+        <br />
         {table.getFilteredSelectedRowModel().rows.length} من{" "}
-        {table.getFilteredRowModel().rows.length} تم اختيار
+        {table.getFilteredRowModel().rows.length} 
         </div>
 
       <Table>
         <TableHeader>
         <TableRow className="text-xl font-semibold py-2">
-            <TableHead colSpan={9} className="text-center">كشف أسماء المتقدمين</TableHead>
+            <TableHead colSpan={10} className="text-center">كشف أسماء المتقدمين</TableHead>
           </TableRow>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
