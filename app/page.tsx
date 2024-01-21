@@ -55,6 +55,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
@@ -304,7 +305,7 @@ export default function Home() {
                     </FormItem>
                   )}
                 />
-                <div className="flex items-center justify-center">
+                <div className="flex items-start justify-center w-full">
                   <FormField
                     control={form.control}
                     name="date"
@@ -312,18 +313,19 @@ export default function Home() {
                       <FormItem>
                         <FormLabel>تاريخ الميلاد</FormLabel>
                         <FormControl>
-                          <div className="relative max-w-sm focus:border-black ">
+                          <div className="relative max-w-sm">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DemoContainer components={["DatePicker"]}>
                                 <DatePicker
                                   label=""
-                                  onChange={(date) => {
-                                    const dateString =
-                                      date?.toISOString().split("T")[0] ?? "";
-                                    field.onChange(dateString); // Update form field
-                                    setAge(calculateAge(dateString)); // Calculate and set age
+                                  onChange={(newValue: Dayjs | null) => {
+                                    if (newValue) {
+                                      const dateString =
+                                        newValue.format("YYYY-MM-DD");
+                                      field.onChange(dateString); // Update form field
+                                      setAge(calculateAge(dateString)); // Calculate and set age
+                                    }
                                   }}
-                                  defaultValue={field.value}
                                 />
                               </DemoContainer>
                             </LocalizationProvider>
@@ -339,14 +341,16 @@ export default function Home() {
                     name="age"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>العمر</FormLabel>
+                        <FormLabel className="">العمر</FormLabel>
                         <FormControl>
-                          <Input
-                            disabled
-                            className="text-center disabled:opacity-100"
-                            type="text"
-                            placeholder={age !== null ? `${age} سنوات` : ""}
-                          />
+                          <div className="">
+                            <Input
+                              disabled
+                              className="mt-4 text-center py-[1.7rem] disabled:opacity-100"
+                              type="text"
+                              placeholder={age !== null ? `${age} سنة` : ""}
+                            />
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
