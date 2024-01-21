@@ -125,6 +125,17 @@ async function getData(): Promise<student[]> {
     status: "مقبول",
     class: "الحلقة الثانية"
   },
+  {    studentId: "-",
+  name: "عبدالله  المطاوعه",
+  dateOfBirth: "23/10/2007",
+  age: "17",
+  fatherPhone: "0559763547",
+  studentPhone: "055948567",
+  email: "-",
+  year: "الثالث ثانوي",
+  status: "مقبول",
+  class: "الحلقة الثانية"
+},
   ]
 }
 

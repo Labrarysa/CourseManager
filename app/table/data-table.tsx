@@ -76,8 +76,17 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-      <div className="flex place-content-center">
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex items-center justify-between w-full mb-16">
+
+      <div className="flex items-end text-sm text-muted-foreground">
+        تم اختيار
+        <br />
+        {table.getFilteredSelectedRowModel().rows.length} من{" "}
+        {table.getFilteredRowModel().rows.length} 
+        </div>
+
+        <div className="flex justify-center">
         <Input
           placeholder="ابحث بالاسم ..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -86,10 +95,13 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-      {/* <DropdownMenu>
+        </div>
+
+        <div>
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              الأعمدة
+              تصنيف
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -113,20 +125,15 @@ export function DataTable<TData, TValue>({
                 )
               })}
           </DropdownMenuContent>
-        </DropdownMenu> */}
+        </DropdownMenu>
         </div>
-        
-        <div className="flex-1 text-sm text-muted-foreground">
-        تم اختيار
-        <br />
-        {table.getFilteredSelectedRowModel().rows.length} من{" "}
-        {table.getFilteredRowModel().rows.length} 
+
         </div>
 
       <Table>
         <TableHeader>
         <TableRow className="text-xl font-semibold py-2">
-            <TableHead colSpan={10} className="text-center">كشف أسماء المتقدمين</TableHead>
+            <TableHead colSpan={11} className="text-center font-bold text-black pb-5">كشف أسماء المتقدمين</TableHead>
           </TableRow>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>

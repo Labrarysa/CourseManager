@@ -71,7 +71,7 @@ export const columns: ColumnDef<student>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
            العمر
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="mr-1 h-4 w-4" />
         </Button>
       )
     },
@@ -101,7 +101,7 @@ export const columns: ColumnDef<student>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
            الحالة
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="mr-1 h-4 w-4" />
         </Button>
       )
     },
@@ -112,7 +112,7 @@ export const columns: ColumnDef<student>[] = [
     cell: ({ cell }) => (
       <Select>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select class" value={cell.getValue()} />
+          <SelectValue placeholder="اختيار الحَلقة" value={cell.getValue()} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="الحلقة الأولى">الحلقة الأولى</SelectItem>
