@@ -10,6 +10,7 @@ import {
   getSortedRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
+  VisibilityState,
 } from "@tanstack/react-table"
 
 import {
@@ -21,7 +22,15 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -37,6 +46,9 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
+  const [columnVisibility, setColumnVisibility] =
+  React.useState<VisibilityState>({})
+
   const table = useReactTable({
     data,
     columns,
@@ -45,25 +57,54 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
     }
   })
-  
 
   return (
     <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-      <div className="flex align-items: center">
+      <div className="flex place-content-center">
         <Input
           placeholder="ابحث بالاسم ..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
+          className="max-w-sm"
         />
-      </div>
-
+      {/* <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              الأعمدة
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter(
+                (column) => column.getCanHide()
+              )
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                )
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu> */}
+        </div>
       <Table>
         <TableHeader>
         <TableRow className="text-xl font-semibold py-2">
