@@ -48,6 +48,7 @@ export function DataTable<TData, TValue>({
   )
   const [columnVisibility, setColumnVisibility] =
   React.useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
     data,
@@ -58,10 +59,12 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
+      rowSelection,
     }
   })
 
@@ -105,6 +108,12 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu> */}
         </div>
+        
+        <div className="flex-1 text-sm text-muted-foreground">
+        {table.getFilteredSelectedRowModel().rows.length} من{" "}
+        {table.getFilteredRowModel().rows.length} تم اختيار
+        </div>
+
       <Table>
         <TableHeader>
         <TableRow className="text-xl font-semibold py-2">
