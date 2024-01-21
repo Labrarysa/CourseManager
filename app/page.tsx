@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { Input } from "@/components/ui/input";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form"; // Hook for managing form state
 import { registerSchema } from "@/validators/auth"; // Zod schema for form validation
 import { z } from "zod"; // Zod library for schema definition
@@ -50,6 +51,10 @@ import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast 
 import { useRouter } from "next/navigation"; // To navigate to other pages
 import { createClient } from "@/utils/supabse/client";
 import { useMutation } from "@tanstack/react-query";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
@@ -79,23 +84,38 @@ async function addFormResult({ form_id, questions, user_key }: FormInput) {
 export default function Home() {
   const router = useRouter();
   const { toast } = useToast();
+  // const [age, setAge] = React.useState("");
+  const [age, setAge] = React.useState<number | null>(null);
+
   const [formStep, setFormStep] = React.useState(0); // State to manage the current step of the form
   // useForm hook initialization with Zod schema for validation
+
   const form = useForm<Input>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       // Define default form field values
-      confirmPassword: "",
-      email: "",
+      // confirmPassword: "",
+      // email: "",
       name: "",
-      password: "",
-      studentId: "",
       year: "",
-      fatherName: "",
+      date: "",
+      age: "",
       fatherEmail: "",
       fatherPhoneNumber: "",
     },
   });
+
+  const calculateAge = (birthdate: string): number => {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
   const { mutate } = useMutation({ mutationFn: addFormResult });
 
   // Function to handle form submission
@@ -284,6 +304,55 @@ export default function Home() {
                     </FormItem>
                   )}
                 />
+                <div className="flex items-center justify-center">
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>تاريخ الميلاد</FormLabel>
+                        <FormControl>
+                          <div className="relative max-w-sm focus:border-black ">
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DemoContainer components={["DatePicker"]}>
+                                <DatePicker
+                                  label=""
+                                  onChange={(date) => {
+                                    const dateString =
+                                      date?.toISOString().split("T")[0] ?? "";
+                                    field.onChange(dateString); // Update form field
+                                    setAge(calculateAge(dateString)); // Calculate and set age
+                                  }}
+                                  defaultValue={field.value}
+                                />
+                              </DemoContainer>
+                            </LocalizationProvider>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="age"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>العمر</FormLabel>
+                        <FormControl>
+                          <Input
+                            disabled
+                            className="text-center disabled:opacity-100"
+                            type="text"
+                            placeholder={age !== null ? `${age} سنوات` : ""}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </motion.div>
               <motion.div
                 className={cn("space-y-3 relative top-0 left-0 right-0 px-2", {

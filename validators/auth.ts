@@ -8,13 +8,8 @@ export const registerSchema = z.object({
     .string()
     .min(7, { message: "اكتب اسمك الثلاثي كاملاً" })
     .max(255),
-  studentId: z
-    .string()
-    .min(10, {message:"يجب أن يحتوي السجل المدني على ١٠ أرقام وباللغة الإنجليزية فقط"})
-    .max(10)
-    .refine((val) => !isNaN(val as unknown as number), {
-      message: "يجب أن يحتوي السجل المدني على أرقام فقط وباللغة الإنجليزية",
-    }),
+  date: z.string(),
+  age: z.string(),
   year: z.string().min(1, { message: "يجب اختيار الصف الدراسي " }).max(30),
   password: z.string().min(6, { message: "يجب أن تحتوي كلمة المرور على ٧ ارقام على الأقل" }).max(100),
   confirmPassword: z.string().min(6,  { message: "يجب أن تحتوي كلمة المرور على ٧ ارقام على الأقل" }).max(100),
