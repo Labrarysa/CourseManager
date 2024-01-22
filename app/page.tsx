@@ -39,7 +39,6 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { Input } from "@/components/ui/input";
-import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form"; // Hook for managing form state
 import { registerSchema } from "@/validators/auth"; // Zod schema for form validation
 import { z } from "zod"; // Zod library for schema definition
@@ -253,7 +252,7 @@ export default function Home() {
                       </AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => {
-                          router.push("/form-submission");
+                          router.push("/registerByID");
                         }}
                       >
                         نعم
