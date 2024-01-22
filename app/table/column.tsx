@@ -1,35 +1,34 @@
-"use client"
+"use client";
 
 // Import necessary components and libraries
-import { Button } from "@/components/ui/button"
-import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 // Type definition for 'student', specifying the structure of student data
 export type student = {
-  studentId: string
-  name: string
-  dateOfBirth: string
-  age: string
-  fatherPhone: string
-  studentPhone: string
-  email: string
-  year: string
-  status: "انتظار" | "مقبول" 
-  class: string
-}
+  studentId: string;
+  name: string;
+  dateOfBirth: string;
+  age: string;
+  fatherPhone: string;
+  studentPhone: string;
+  email: string;
+  year: string;
+  status: "انتظار" | "مقبول";
+  class: string;
+};
 
 // Definition of table columns for displaying student data
 export const columns: ColumnDef<student>[] = [
-  
   // Checkbox column for selecting rows
   {
     id: "select",
@@ -76,10 +75,10 @@ export const columns: ColumnDef<student>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-           العمر
-          <ArrowUpDown className="mr-1 h-4 w-4" />
+          العمر
+          <ArrowUpDown className="w-4 h-4 mr-1" />
         </Button>
-      )
+      );
     },
   },
   // Column for father's phone number
@@ -111,10 +110,10 @@ export const columns: ColumnDef<student>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-           الحالة
-          <ArrowUpDown className="mr-1 h-4 w-4" />
+          الحالة
+          <ArrowUpDown className="w-4 h-4 mr-1" />
         </Button>
-      )
+      );
     },
   },
   // Dropdown column for selecting student's class
@@ -124,7 +123,7 @@ export const columns: ColumnDef<student>[] = [
     cell: ({ cell }) => (
       <Select>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="اختيار الحَلقة" value={cell.getValue()} />
+          <SelectValue placeholder="اختيار الحَلقة" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="الحلقة الأولى">الحلقة الأولى</SelectItem>
@@ -133,6 +132,6 @@ export const columns: ColumnDef<student>[] = [
           {/* Add more options here as needed */}
         </SelectContent>
       </Select>
-    )
+    ),
   },
-]
+];
