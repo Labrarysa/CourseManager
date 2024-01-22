@@ -47,6 +47,7 @@ export interface Database {
           student_key: string | null
           submission_timestamp: string | null
           user_id: string | null
+          user_key: string | null
         }
         Insert: {
           answer?: string | null
@@ -56,6 +57,7 @@ export interface Database {
           student_key?: string | null
           submission_timestamp?: string | null
           user_id?: string | null
+          user_key?: string | null
         }
         Update: {
           answer?: string | null
@@ -65,6 +67,7 @@ export interface Database {
           student_key?: string | null
           submission_timestamp?: string | null
           user_id?: string | null
+          user_key?: string | null
         }
         Relationships: [
           {
