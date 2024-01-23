@@ -173,6 +173,19 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
+
+      <div className="mt-16 flex justify-center">
+
+      <div className=" ml-10">
+        <Button className="bg-red-500" variant="outline">حذف</Button>
+      </div>
+
+      <div>
+         <Button variant="outline">ارسال</Button>
+      </div>
+
+      </div>
+
     </div>
   )
 }
