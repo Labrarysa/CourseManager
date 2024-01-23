@@ -133,12 +133,15 @@ const Circles = () => {
             </DrawerTrigger>
             <DrawerContent>
               <div className="flex flex-col items-center justify-center m-8">
+                <div>
                 <DrawerHeader>
                   <DrawerTitle>مجموعات {circle.name}</DrawerTitle>
                 </DrawerHeader>
+                </div>
+                
                 <div
                   role="list"
-                  className="grid grid-cols-1 gap-8 m-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                  className="flex justify-center"
                 >
                   {circle.groups.map((group) => (
                     <Card
