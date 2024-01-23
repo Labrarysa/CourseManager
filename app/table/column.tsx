@@ -25,6 +25,7 @@ export type student = {
   year: string;
   status: "انتظار" | "مقبول";
   class: string;
+  group: string;
 };
 
 // Definition of table columns for displaying student data
@@ -119,10 +120,21 @@ export const columns: ColumnDef<student>[] = [
   // Dropdown column for selecting student's class
   {
     accessorKey: "class",
-    header: "الحَلقة ",
+    header: ({ column }) => (
+      <div className="flex items-center">
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="mr-2"
+        >
+          الحَلقة
+          <ArrowUpDown className="w-4 h-4 mr-1" />
+        </Button>
+      </div>
+    ),
     cell: ({ cell }) => (
       <Select>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-[120px]">
           <SelectValue placeholder="اختيار الحَلقة" />
         </SelectTrigger>
         <SelectContent>
@@ -134,4 +146,33 @@ export const columns: ColumnDef<student>[] = [
       </Select>
     ),
   },
+    // Dropdown column for selecting student's group
+    {
+      accessorKey: "group",
+      header: ({ column }) => (
+        <div className="flex items-center">
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className="mr-2"
+          >
+            المجموعة
+            <ArrowUpDown className="w-4 h-4 mr-1" />
+          </Button>
+        </div>
+      ),
+      cell: ({ cell }) => (
+        <Select>
+          <SelectTrigger className="w-[140px]">
+            <SelectValue placeholder="اختيار المجموعة" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="المجموعة الأولى">المجموعة الأولى</SelectItem>
+            <SelectItem value="المجموعة الثانية">المجموعة الثانية</SelectItem>
+            <SelectItem value="المجموعة الثالثة">المجموعة الثالثة</SelectItem>
+            {/* Add more options here as needed */}
+          </SelectContent>
+        </Select>
+      ),
+    },
 ];
