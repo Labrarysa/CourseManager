@@ -132,10 +132,10 @@ export function DataTable<TData, TValue>({
       <Table>
         {/* Table header rendering */}
         <TableHeader>
-          <TableRow className="py-2 text-xl font-semibold">
+          <TableRow className="py-2 text-xl font-semibold ">
             <TableHead
-              colSpan={11}
-              className="pb-5 font-bold text-center text-black"
+              colSpan={12}
+              className="text-3xl font-bold tracking-tight text-center text-black py-7 scroll-m-20 lg:text-4xl"
             >
               كشف أسماء المتقدمين
             </TableHead>
@@ -184,14 +184,11 @@ export function DataTable<TData, TValue>({
 
       <div className="flex justify-center mt-16">
         <div>
-          <Button variant="outline">ارسال</Button>
+          <Button>ارسال</Button>
         </div>
 
         <div className="mr-10 ">
-          <Button
-            className="duration-300 bg-red-500 hover:bg-red-600 transtion-all"
-            variant="outline"
-          >
+          <Button className="text-white duration-300 bg-red-600 hover:bg-red-500 transtion-all">
             حذف
           </Button>
         </div>
