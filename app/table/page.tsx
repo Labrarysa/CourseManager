@@ -44,7 +44,7 @@ export default async function DemoPage() {
   const data = await getData();
 
   return (
-    <div className="container py-10 mx-auto">
+    <div className="container px-2 py-10 mx-auto">
       {/* Rendering the DataTable component with the fetched data and column configuration */}
       <DataTable columns={columns} data={data} />
     </div>

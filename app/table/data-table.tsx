@@ -135,7 +135,7 @@ export function DataTable<TData, TValue>({
           <TableRow className="py-2 text-xl font-semibold ">
             <TableHead
               colSpan={12}
-              className="text-3xl font-bold tracking-tight text-center text-black py-7 scroll-m-20 lg:text-4xl"
+              className="text-2xl font-bold tracking-tight text-center text-black py-7 scroll-m-20 lg:text-3xl"
             >
               كشف أسماء المتقدمين
             </TableHead>
