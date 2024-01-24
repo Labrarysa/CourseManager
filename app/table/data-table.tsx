@@ -88,14 +88,14 @@ export function DataTable<TData, TValue>({
         </div>
 
         {/* Search input for filtering rows by name */}
-        <div className="flex justify-center">
+        <div className="flex items-center justify-center">
           <Input
             placeholder="ابحث بالاسم ..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("name")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="w-40 md:w-64"
           />
         </div>
 
