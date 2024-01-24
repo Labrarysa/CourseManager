@@ -20,7 +20,7 @@ async function getData(): Promise<student[]> {
       year: "الأول ثانوي",
       status: "انتظار",
       class: "الحلقة الأولى",
-      // group: "القروب الأول",
+      group: "القروب الأول",
     },
     {
       studentId: "-",
@@ -33,7 +33,7 @@ async function getData(): Promise<student[]> {
       year: "الثالث ثانوي",
       status: "مقبول",
       class: "الحلقة الثانية",
-      // group: "القروب الأول",
+      group: "القروب الأول",
     },
   ];
 }
