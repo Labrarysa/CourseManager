@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 // Importing necessary React and @tanstack/react-table components and hooks
-import * as React from "react"
+import * as React from "react";
 import {
   ColumnDef,
   flexRender,
@@ -12,7 +12,7 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
   VisibilityState,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 // Importing custom UI components for the table display
 import {
@@ -22,7 +22,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
 // Importing dropdown menu components for column visibility control
 import {
@@ -30,16 +30,16 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 // Importing input and button components
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 // DataTableProps interface defines the shape of props accepted by DataTable
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 // DataTable component definition, using generics for flexibility
@@ -48,10 +48,13 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   // State for sorting, column filters, column visibility, and row selection
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   // Initializing the table with provided columns and data, and the necessary configurations
   const table = useReactTable({
@@ -69,8 +72,8 @@ export function DataTable<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
-    }
-  })
+    },
+  });
 
   // The rendered UI of the DataTable
   return (
@@ -81,7 +84,7 @@ export function DataTable<TData, TValue>({
           تم اختيار
           <br />
           {table.getFilteredSelectedRowModel().rows.length} من{" "}
-          {table.getFilteredRowModel().rows.length} 
+          {table.getFilteredRowModel().rows.length}
         </div>
 
         {/* Search input for filtering rows by name */}
@@ -129,8 +132,13 @@ export function DataTable<TData, TValue>({
       <Table>
         {/* Table header rendering */}
         <TableHeader>
-          <TableRow className="text-xl font-semibold py-2">
-            <TableHead colSpan={11} className="text-center font-bold text-black pb-5">كشف أسماء المتقدمين</TableHead>
+          <TableRow className="py-2 text-xl font-semibold">
+            <TableHead
+              colSpan={11}
+              className="pb-5 font-bold text-center text-black"
+            >
+              كشف أسماء المتقدمين
+            </TableHead>
           </TableRow>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -144,7 +152,7 @@ export function DataTable<TData, TValue>({
                           header.getContext()
                         )}
                   </TableHead>
-                )
+                );
               })}
             </TableRow>
           ))}
@@ -174,18 +182,20 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
 
-      <div className="mt-16 flex justify-center">
+      <div className="flex justify-center mt-16">
+        <div>
+          <Button variant="outline">ارسال</Button>
+        </div>
 
-      <div className=" ml-10">
-        <Button className="bg-red-500" variant="outline">حذف</Button>
+        <div className="mr-10 ">
+          <Button
+            className="duration-300 bg-red-500 hover:bg-red-600 transtion-all"
+            variant="outline"
+          >
+            حذف
+          </Button>
+        </div>
       </div>
-
-      <div>
-         <Button variant="outline">ارسال</Button>
-      </div>
-
-      </div>
-
     </div>
-  )
+  );
 }

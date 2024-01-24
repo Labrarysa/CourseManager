@@ -1,9 +1,9 @@
 // Importing necessary React hooks and components
-import React, { useState } from 'react';
+import React from "react";
 // Importing the student type and columns definition
-import { student, columns } from "./column"
+import { student, columns } from "./column";
 // Importing the DataTable component
-import { DataTable } from "./data-table"
+import { DataTable } from "./data-table";
 
 // Async function to fetch or simulate fetching of student data
 async function getData(): Promise<student[]> {
@@ -20,7 +20,7 @@ async function getData(): Promise<student[]> {
       year: "الأول ثانوي",
       status: "انتظار",
       class: "الحلقة الأولى",
-      group: "القروب الأول",
+      // group: "القروب الأول",
     },
     {
       studentId: "-",
@@ -33,20 +33,20 @@ async function getData(): Promise<student[]> {
       year: "الثالث ثانوي",
       status: "مقبول",
       class: "الحلقة الثانية",
-      group: "القروب الأول",
+      // group: "القروب الأول",
     },
-  ]
+  ];
 }
 
 // The DemoPage component
 export default async function DemoPage() {
   // Fetching data asynchronously and storing it in a variable
-  const data = await getData()
+  const data = await getData();
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container py-10 mx-auto">
       {/* Rendering the DataTable component with the fetched data and column configuration */}
       <DataTable columns={columns} data={data} />
     </div>
-  )
+  );
 }
