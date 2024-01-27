@@ -55,6 +55,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
+import NavBar from "@/components/ui/navbar";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
@@ -200,7 +201,10 @@ export default function Home() {
   };
 
   return (
-    // Centering the card on the screen using absolute positioning
+    
+    <div>
+    <NavBar organizationName="دورة الإمام المنتظر"/>
+    {/*Centering the card on the screen using absolute positioning*/}
     <div className="flex items-center justify-center h-screen">
       {/* Card component that contains the form */}
       <Card className="md:w-[420px] w-[350px]">
@@ -455,6 +459,7 @@ export default function Home() {
           </Form>
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }
