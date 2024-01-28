@@ -6,7 +6,6 @@ when the user is logged in, the two buttons should be hidden and profile icon is
 "use client"
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 interface NavbarProps {
   organizationName: string;
@@ -48,15 +47,15 @@ const Navbar: React.FC<NavbarProps> = ({ organizationName }) => {
             >
               <ul className="h-screen md:h-auto items-center justify-center md:flex ">
 
-                <li className="pb-4 text-lg py-2 md:px-6 text-center hover:text-gray-700">
+                <li className="pb-4 text-lg py-2 md:px-6 text-center hover:text-gray-500">
                   <Link href="#"> {/*This link should go to من نحن section */}
                     من نحن
                   </Link>
                 </li>
 
-                <li className="pb-4 text-lg py-2 md:px-6 text-center hover:text-gray-700">
-                  <Link href="#"> {/*This link should go to البرامج section */}
-                    البرامج
+                <li className="pb-4 text-lg py-2 md:px-6 text-center hover:text-gray-500">
+                  <Link href="#"> {/*This link should go to س section */}
+                    س
                   </Link>
                 </li>
 
@@ -64,7 +63,7 @@ const Navbar: React.FC<NavbarProps> = ({ organizationName }) => {
 
                 <li className="pb-4 text-md py-2 md:px-6 text-center">
                   <Link href="/"> {/*This link should route to أنشئ حساب جديد page */}
-                    <button className=" bg-gray-700 hover:bg-gray-500 duration-500 text-white font-bold py-2 px-4 rounded">
+                    <button className=" bg-black hover:bg-gray-500 duration-500 text-white font-bold py-2 px-4 rounded">
                     إنشاء حساب
                     </button>
                   </Link>
@@ -72,7 +71,7 @@ const Navbar: React.FC<NavbarProps> = ({ organizationName }) => {
 
                 <li className="pb-4 text-md py-2 md:px-6 text-center md:border-b-0">
                   <Link href="/"> {/*This link should route to تسجيل دخول page */}
-                    <button className=" bg-transparent hover:bg-gray-700 duration-500 font-bold py-2 px-4 border border-gray-700 hover:border-transparent rounded">
+                    <button className=" bg-transparent hover:bg-gray-500 duration-500 font-bold py-2 px-4 border border-gray-500 hover:border-transparent rounded">
                     تسجيل دخول
                     </button>
                   </Link>
