@@ -201,10 +201,8 @@ export default function Home() {
   };
 
   return (
-    
-    <div>
-    <NavBar organizationName="دورة الإمام المنتظر"/>
-    {/*Centering the card on the screen using absolute positioning*/}
+      
+    // Centering the card on the screen using absolute positioning
     <div className="flex items-center justify-center h-screen">
       {/* Card component that contains the form */}
       <Card className="md:w-[420px] w-[350px]">
@@ -460,6 +458,6 @@ export default function Home() {
         </CardContent>
       </Card>
     </div>
-    </div>
+    
   );
 }

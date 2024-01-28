@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
 import { ReactQueryProvider } from "@/utils/ReactQueryProvider";
+import Navbar from "@/components/ui/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +22,9 @@ export default function RootLayout({
     <html lang="ar">
       <body className={inter.className}>
         <ReactQueryProvider>
+          <Navbar organizationName="دورة الإمام المنتظر"/>
           {children}
-          <Toaster />
+          <Toaster/>
         </ReactQueryProvider>
       </body>
     </html>

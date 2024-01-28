@@ -1,46 +1,90 @@
-import React from 'react';
-import Link from 'next/link'
+/* Navbar
+this navbar will be shown when the user is not logged in.
+when the user is logged in, the two buttons should be hidden and profile icon is shown (future update).
+*/
 
-//Navbar component 
-// It could be dynamic later based on different type of users.
-// if the user is logged in we could add an icon, remove a button,etc.
+"use client"
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 interface NavbarProps {
-    organizationName: string;
+  organizationName: string;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ organizationName })  => {
+const Navbar: React.FC<NavbarProps> = ({ organizationName }) => {
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <nav className="">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
+    <div>
+      <nav className="w-full fixed top-0 left-0 right-0 z-10">
+        <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
+          <div>
+            <div className="flex items-center justify-between py-3 md:py-5 md:block">
+              {/* ORGANIZATION NAME */}
+              <Link href="/">
+                <h2 className="text-xl font-bold ">{organizationName}</h2>
+              </Link>
+              {/* HAMBURGER BUTTON FOR SMALL SCREENS */}
+              <div className="md:hidden">
+                <button
+                  className="p-2 text-gray-700 rounded-md outline-none"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  <img src= {`${isMenuOpen ? '/x.png' : '/hamburger-menu.png'}`} alt="menu"
+                  className='w-10 h-10'/>
 
-            <Link href="/"> {/*This link should route to الصفجة الرئيسية page */}
-                <span className= "font-bold text-xl">{organizationName}</span>
-            </Link>
-
+                </button>
+              </div>
             </div>
           </div>
-          <div>
-            <Link href="/"> {/*This link should route to أنشئ حساب جديد page */}
-                <button className="mr-2 bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">
-                إنشاء حساب 
-                </button>
-            </Link>
-                   
-            <Link href="/"> {/*This link should route to تسجيل دخول page */}
-                <button className="mr-2 bg-transparent hover:bg-gray-700 font-bold py-2 px-4 border border-gray-700 hover:border-transparent rounded">
-                تسجيل دخول
-                </button>
-            </Link>    
 
+          <div>
+            <div
+              className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
+                isMenuOpen ? 'p-12 md:p-0 block z-10 bg-white' : 'hidden'
+              }`}
+            >
+              <ul className="h-screen md:h-auto items-center justify-center md:flex ">
+
+                <li className="pb-4 text-lg py-2 md:px-6 text-center hover:text-gray-700">
+                  <Link href="#"> {/*This link should go to من نحن section */}
+                    من نحن
+                  </Link>
+                </li>
+
+                <li className="pb-4 text-lg py-2 md:px-6 text-center hover:text-gray-700">
+                  <Link href="#"> {/*This link should go to البرامج section */}
+                    البرامج
+                  </Link>
+                </li>
+
+                {/* you can add more <li> here*/}
+
+                <li className="pb-4 text-md py-2 md:px-6 text-center">
+                  <Link href="/"> {/*This link should route to أنشئ حساب جديد page */}
+                    <button className=" bg-gray-700 hover:bg-gray-500 duration-500 text-white font-bold py-2 px-4 rounded">
+                    إنشاء حساب
+                    </button>
+                  </Link>
+                </li>
+
+                <li className="pb-4 text-md py-2 md:px-6 text-center md:border-b-0">
+                  <Link href="/"> {/*This link should route to تسجيل دخول page */}
+                    <button className=" bg-transparent hover:bg-gray-700 duration-500 font-bold py-2 px-4 border border-gray-700 hover:border-transparent rounded">
+                    تسجيل دخول
+                    </button>
+                  </Link>
+                </li>
+              </ul>
+              
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 
-export default Navbar;
+export default Navbar; 
