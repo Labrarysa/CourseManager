@@ -26,6 +26,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form"; // Hook for managing form state
 import { registerSchema } from "@/validators/auth"; // Zod schema for form validation
@@ -38,6 +50,11 @@ import { useToast } from "@/components/ui/use-toast"; // Hook for showing toast 
 import { useRouter } from "next/navigation"; // To navigate to other pages
 import { createClient } from "@/utils/supabse/client";
 import { useMutation } from "@tanstack/react-query";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
 
 // Type definition inferred from Zod schema
 type Input = z.infer<typeof registerSchema>;
@@ -64,60 +81,98 @@ async function addFormResult({ form_id, questions, user_key }: FormInput) {
   }
 }
 
-export default function RegistrationForm() {
+export default function Home() {
   const router = useRouter();
   const { toast } = useToast();
+  // const [age, setAge] = React.useState("");
+  const [age, setAge] = React.useState<number | null>(null);
+
   const [formStep, setFormStep] = React.useState(0); // State to manage the current step of the form
   // useForm hook initialization with Zod schema for validation
+
   const form = useForm<Input>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       // Define default form field values
-      confirmPassword: "",
-      email: "",
       name: "",
-      password: "",
-      studentId: "",
       year: "",
-      fatherName: "",
+      date: "",
+      age: "",
       fatherEmail: "",
       fatherPhoneNumber: "",
     },
   });
+
+  const calculateAge = (birthdate: string): number => {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
   const { mutate } = useMutation({ mutationFn: addFormResult });
 
   // Function to handle form submission
+  // Function to handle form submission
   async function onSubmit(data: Input) {
-    // Custom validation for password confirmation
-    if (data.confirmPassword !== data.password) {
+    // Assuming that "mutate" actually performs the form submission logic
+
+    if (age !== null && age < 5) {
       toast({
-        title: "كلمة المرور المدخلة غير متطابقة",
+        title: "العمر يجب أن يكون 5 سنوات أو أكثر",
         variant: "destructive",
       });
       return;
     }
 
-    mutate({
-      form_id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-      user_key: "2412001",
-      questions: [
-        {
-          question_id: "dddddddd-dddd-dddd-dddd-dddddddddddd",
-          answer: data.name,
+    mutate(
+      {
+        form_id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+        user_key: "2412001",
+        questions: [
+          {
+            question_id: "3157a6ca-cfc0-440c-bdf9-0731beb56d85",
+            answer: data.name,
+          },
+          {
+            question_id: "50431c6c-13f8-4c08-8c13-1991206e0914",
+            answer: data.fatherEmail,
+          },
+          {
+            question_id: "c9a448c1-b01f-4c63-b28d-c9c188177038",
+            answer: data.year,
+          },
+          {
+            question_id: "935f294e-5a30-4d38-9e64-7d3651474a0b",
+            answer: data.date,
+          },
+          {
+            question_id: "b90f36fe-ff13-4efa-991e-e41adf84df3f",
+            answer: data.fatherPhoneNumber,
+          },
+          // If you have other fields, continue to add them here
+        ],
+      },
+      {
+        onSuccess: () => {
+          // Navigate to form submission page only if mutation is successful
+          router.push("/form-submission");
         },
-        {
-          question_id: "eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee",
-          answer: data.email,
+        onError: (error) => {
+          // Handle the error case, e.g., show a notification
+          toast({
+            title: "Error",
+            description:
+              error.message || "An error occurred while submitting the form.",
+            variant: "destructive",
+          });
         },
-        {
-          question_id: "ffffffff-ffff-ffff-ffff-ffffffffffff",
-          answer: data.studentId,
-        },
-      ],
-    });
-
-    // Navigate to form submission page
-    router.push("/form-submission");
+      }
+    );
   }
 
   // Function to advance to the next form step
@@ -125,16 +180,19 @@ export default function RegistrationForm() {
     // Perform validation checks for each step
     switch (formStep) {
       case 0:
-        form.trigger(["email", "name", "studentId", "year"]).then((valid) => {
-          if (valid) setFormStep(1);
-        });
+        setFormStep(1);
         break;
       case 1:
-        form
-          .trigger(["fatherName", "fatherEmail", "fatherPhoneNumber"])
-          .then((valid) => {
-            if (valid) setFormStep(2);
-          });
+        form.trigger(["name", "year", "date"]).then((valid) => {
+          if (valid && age !== null) {
+            setFormStep(2);
+          }
+        });
+        break;
+      case 2:
+        form.trigger(["fatherEmail", "fatherPhoneNumber"]).then((valid) => {
+          if (valid) setFormStep(3);
+        });
         break;
       default:
         break;
@@ -147,7 +205,7 @@ export default function RegistrationForm() {
       {/* Card component that contains the form */}
       <Card className="md:w-[420px] w-[350px]">
         {/* Card header with title and description */}
-        <CardHeader className="pt-10 text-center">
+        <CardHeader className="text-center">
           <CardTitle>انشئ حساب جديد</CardTitle>
           <CardDescription>انشئ حسابك بخطوات بسيطة وسهلة</CardDescription>
         </CardHeader>
@@ -169,6 +227,49 @@ export default function RegistrationForm() {
                   ease: "easeInOut",
                 }}
               >
+                <AlertDialog>
+                  <AlertDialogTrigger className="w-full pt-5 text-center text-blue-500 ">
+                    <span className="underline transition-all duration-300 hover:text-blue-700 ">
+                      اضغط هنا
+                    </span>{" "}
+                    لبدأ عملية التسجيل
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="flex flex-col items-center justify-center w-full text-center">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        هل سبق للطالب التسجيل في الدورة مسبقاً ؟
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        إذا كنت قد شاركت في الدورة من قبل، يرجى الضغط على الزر{" "}
+                        <span className="font-bold">نعم</span>. وإذا كانت هذه
+                        مشاركتك الأولى، فقم بالضغط على الزر{" "}
+                        <span className="font-bold">لا</span>.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel onClick={goToNextStep}>
+                        لا
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => {
+                          router.push("/registerByID");
+                        }}
+                      >
+                        نعم
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </motion.div>
+
+              {/* Father's Information Fields */}
+              <motion.div
+                className={cn("space-y-3 relative top-0 left-0 right-0 px-2", {
+                  hidden: formStep !== 1,
+                })}
+                animate={{ translateX: `-${100 - formStep * 100}%` }}
+                transition={{ ease: "easeInOut" }}
+              >
                 {/* Name field */}
                 <FormField
                   control={form.control}
@@ -177,36 +278,8 @@ export default function RegistrationForm() {
                     <FormItem>
                       <FormLabel>الإسم الثلاثي</FormLabel>
                       <FormControl>
-                        <Input placeholder="ادخل اسمك الثلاثي" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* email */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>البريد الإلكتروني</FormLabel>
-                      <FormControl>
-                        <Input placeholder="أدخل بريدك الإلكتروني" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* student id */}
-                <FormField
-                  control={form.control}
-                  name="studentId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>السجل المدني</FormLabel>
-                      <FormControl>
                         <Input
-                          placeholder="ادخل رقم السجل المدني الخاص بك"
+                          placeholder="ادخل اسم الطالب الثلاثي"
                           {...field}
                         />
                       </FormControl>
@@ -214,6 +287,7 @@ export default function RegistrationForm() {
                     </FormItem>
                   )}
                 />
+
                 {/* year */}
                 <FormField
                   control={form.control}
@@ -258,33 +332,66 @@ export default function RegistrationForm() {
                     </FormItem>
                   )}
                 />
-              </motion.div>
+                <div className="flex items-start justify-center w-full">
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>تاريخ الميلاد</FormLabel>
+                        <FormControl>
+                          <div className="relative max-w-sm">
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DemoContainer components={["DatePicker"]}>
+                                <DatePicker
+                                  label=""
+                                  onChange={(newValue: Dayjs | null) => {
+                                    if (newValue) {
+                                      const dateString =
+                                        newValue.format("YYYY-MM-DD");
+                                      field.onChange(dateString); // Update form field
+                                      setAge(calculateAge(dateString)); // Calculate and set age
+                                    }
+                                  }}
+                                />
+                              </DemoContainer>
+                            </LocalizationProvider>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-              {/* Father's Information Fields */}
+                  <FormField
+                    control={form.control}
+                    name="age"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="">العمر</FormLabel>
+                        <FormControl>
+                          <div className="">
+                            <Input
+                              disabled
+                              className="mt-4 text-center py-[1.7rem] disabled:opacity-100"
+                              type="text"
+                              placeholder={age !== null ? `${age} سنة` : ""}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </motion.div>
               <motion.div
-                className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
-                  hidden: formStep !== 1,
+                className={cn("space-y-3 relative top-0 left-0 right-0 px-2", {
+                  hidden: formStep !== 2,
                 })}
-                animate={{ translateX: `-${100 - formStep * 100}%` }}
+                animate={{ translateX: `${-200 + formStep * 100}%` }}
                 transition={{ ease: "easeInOut" }}
               >
-                {/* father's name */}
-                <FormField
-                  control={form.control}
-                  name="fatherName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>اسم ولي الأمر </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="ادخل اسم ولي الأمر الثلاثي "
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 {/* email */}
                 <FormField
                   control={form.control}
@@ -314,53 +421,9 @@ export default function RegistrationForm() {
                   )}
                 />
               </motion.div>
-              <motion.div
-                className={cn("space-y-3 absolute top-0 left-0 right-0 px-2", {
-                  hidden: formStep !== 2,
-                })}
-                animate={{ translateX: `${-200 + formStep * 100}%` }}
-                transition={{ ease: "easeInOut" }}
-              >
-                {/* password */}
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>كلمة المرور</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="ادخل كلمة المرور"
-                          {...field}
-                          type="password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* confirm password */}
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>تأكيد كلمة المرور</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="أكد كلمة المرور الخاصة بك"
-                          {...field}
-                          type="password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </motion.div>
 
               {/* Navigation buttons */}
-              <div className="flex justify-center gap-2">
+              <div className="flex justify-center gap-2 pt-3">
                 {/* Go Back Button */}
                 {formStep > 0 && (
                   <Button
@@ -374,7 +437,7 @@ export default function RegistrationForm() {
                 )}
 
                 {/* Next Step Button */}
-                {formStep < 2 && (
+                {formStep > 0 && formStep < 2 && (
                   <Button type="button" variant="ghost" onClick={goToNextStep}>
                     تقدم
                     <ArrowLeft className="w-4 h-4 mr-2" />
