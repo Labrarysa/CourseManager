@@ -9,12 +9,42 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      circles: {
+        Row: {
+          description: string | null
+          id: string
+          name: string
+          next_circle_id: string | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          name: string
+          next_circle_id?: string | null
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          name?: string
+          next_circle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "circles_next_circle_id_fkey"
+            columns: ["next_circle_id"]
+            isOneToOne: false
+            referencedRelation: "circles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       form_results: {
         Row: {
           answer: string | null
           form_id: string | null
           id: string
           question_id: string | null
+          student_key: string | null
           submission_timestamp: string | null
           user_id: string | null
           user_key: string | null
@@ -24,6 +54,7 @@ export interface Database {
           form_id?: string | null
           id?: string
           question_id?: string | null
+          student_key?: string | null
           submission_timestamp?: string | null
           user_id?: string | null
           user_key?: string | null
@@ -33,6 +64,7 @@ export interface Database {
           form_id?: string | null
           id?: string
           question_id?: string | null
+          student_key?: string | null
           submission_timestamp?: string | null
           user_id?: string | null
           user_key?: string | null
@@ -79,6 +111,69 @@ export interface Database {
           id?: string
           is_quiz?: boolean
           title?: string
+        }
+        Relationships: []
+      }
+      groups: {
+        Row: {
+          circle_id: string | null
+          group_name: string | null
+          id: string
+          max_students: number | null
+          name: string
+          teacher_id: string | null
+          year: number
+        }
+        Insert: {
+          circle_id?: string | null
+          group_name?: string | null
+          id?: string
+          max_students?: number | null
+          name: string
+          teacher_id?: string | null
+          year: number
+        }
+        Update: {
+          circle_id?: string | null
+          group_name?: string | null
+          id?: string
+          max_students?: number | null
+          name?: string
+          teacher_id?: string | null
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "groups_circle_id_fkey"
+            columns: ["circle_id"]
+            isOneToOne: false
+            referencedRelation: "circles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "groups_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      parents: {
+        Row: {
+          full_name: string
+          id: string
+          phone_number: string
+        }
+        Insert: {
+          full_name: string
+          id?: string
+          phone_number: string
+        }
+        Update: {
+          full_name?: string
+          id?: string
+          phone_number?: string
         }
         Relationships: []
       }
@@ -178,6 +273,98 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      student_groups: {
+        Row: {
+          group_id: string | null
+          id: string
+          student_id: string | null
+        }
+        Insert: {
+          group_id?: string | null
+          id?: string
+          student_id?: string | null
+        }
+        Update: {
+          group_id?: string | null
+          id?: string
+          student_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_groups_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_groups_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      students: {
+        Row: {
+          father_name: string
+          first_name: string
+          grandfather_name: string
+          id: string
+          last_name: string
+          parent_id: string | null
+          phone_number: string | null
+          student_key: string | null
+        }
+        Insert: {
+          father_name: string
+          first_name: string
+          grandfather_name: string
+          id?: string
+          last_name: string
+          parent_id?: string | null
+          phone_number?: string | null
+          student_key?: string | null
+        }
+        Update: {
+          father_name?: string
+          first_name?: string
+          grandfather_name?: string
+          id?: string
+          last_name?: string
+          parent_id?: string | null
+          phone_number?: string | null
+          student_key?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "students_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "parents"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      teachers: {
+        Row: {
+          id: string
+          mobile_number: string
+          name: string
+        }
+        Insert: {
+          id?: string
+          mobile_number: string
+          name: string
+        }
+        Update: {
+          id?: string
+          mobile_number?: string
+          name?: string
+        }
+        Relationships: []
       }
     }
     Views: {

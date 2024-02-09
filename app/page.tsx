@@ -6,6 +6,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 
+
 export default async function Home() {
   const queryClient = new QueryClient();
 
@@ -19,5 +20,4 @@ export default async function Home() {
         <RegistrationForm />
       </HydrationBoundary>
     </main>
-  );
-}
+

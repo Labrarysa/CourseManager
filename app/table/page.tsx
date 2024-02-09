@@ -1,90 +1,54 @@
-"use client";
-import React, { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+// Importing necessary React hooks and components
+import React from "react";
+// Importing the student type and columns definition
+import { student, columns } from "./column";
+// Importing the DataTable component
+import { DataTable } from "./data-table";
 
-// Initial static data for students
-const initialStudents = [
-  {
-    number: 1,
-    name: "حسن عبدالحميد العبدالعال",
-    studentId: "12647593073",
-    year: "الأول الابتدائي",
-    email: "Hsoonxx@gmail.com",
-    phone: "0559763547",
-  },
-  {
-    number: 2,
-    name: "عبدالله علي المطاوعه",
-    studentId: "758303736480",
-    year: "الثالث ثانوي",
-    email: "aboood@gmail.com",
-    phone: "0559307583",
-  },
-];
+// Async function to fetch or simulate fetching of student data
+async function getData(): Promise<student[]> {
+  return [
+    {
+      // Hardcoded data representing student entries
+      studentId: "241001",
+      name: "حسن عبدالحميد العبدالعال",
+      dateOfBirth: "12/03/2009",
+      age: "15",
+      fatherPhone: "0559763547",
+      studentPhone: "-",
+      email: "Hsoonxx@gmail.com",
+      year: "الأول ثانوي",
+      status: "انتظار",
+      class: "الحلقة الأولى",
+      group: "القروب الأول",
+    },
+    {
+      studentId: "-",
+      name: "عبدالله علي المطاوعه",
+      dateOfBirth: "23/10/2007",
+      age: "17",
+      fatherPhone: "0559763547",
+      studentPhone: "055948567",
+      email: "-",
+      year: "الثالث ثانوي",
+      status: "مقبول",
+      class: "الحلقة الثانية",
+      group: "القروب الأول",
+    },
+  ];
+}
 
-export default function StudentsTable() {
-  // useState hook to manage student data
-  const [students, setStudents] = useState(initialStudents);
-  // Calculate the number of students for display in the table caption
-  const studentCount = students.length;
-  // TODO: Use React Query to fetch data from the db instead of muck data.
+
+// The DemoPage component
+export default async function DemoPage() {
+  // Fetching data asynchronously and storing it in a variable
+  const data = await getData();
 
   return (
-    // Positioning the table in the center of the page
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-      {/* Scrollable container for the table on smaller screens */}
-      <div className="table-auto md:w-full w-[300px]">
-        {/* Table for displaying student data */}
-        <Table className="min-w-full text-center">
-          {/* Table caption showing the total number of students */}
-          <TableCaption className="py-2 text-xl font-semibold">
-            {`عدد الطلاب: ${studentCount}`}
-          </TableCaption>
+    <div className="container px-2 py-10 mx-auto">
+      {/* Rendering the DataTable component with the fetched data and column configuration */}
+      <DataTable columns={columns} data={data} />
 
-          {/* Table header with column titles */}
-          <TableHeader className="text-sm text-center">
-            {/* Row for the main title spanning all columns */}
-            <TableRow className="py-2 text-xl font-semibold">
-              <TableHead colSpan={6} className="text-center">
-                كشف أسماء الطلاب
-              </TableHead>
-            </TableRow>
-
-            {/* Row for column headings */}
-            <TableRow>
-              <TableHead className="text-center">الرقم</TableHead>
-              <TableHead className="text-center">اسم الطالب الثلاثي</TableHead>
-              <TableHead className="text-center">السجل المدني</TableHead>
-              <TableHead className="text-center">المرحلة الدراسية</TableHead>
-              <TableHead className="text-center">البريد الالكتروني</TableHead>
-              <TableHead className="text-center">رقم الجوال</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          {/* Table body with data rows */}
-          <TableBody className="divide-y">
-            {students.map((student) => (
-              // Row for each student's data
-              <TableRow className="text-sm text-center" key={student.number}>
-                <TableCell className="px-4 py-2">{student.number}</TableCell>
-                <TableCell className="px-4 py-2">{student.name}</TableCell>
-                <TableCell className="px-4 py-2">{student.studentId}</TableCell>
-                <TableCell className="px-4 py-2">{student.year}</TableCell>
-                <TableCell className="px-4 py-2">{student.email}</TableCell>
-                <TableCell className="px-4 py-2">{student.phone}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
     </div>
   );
 }
