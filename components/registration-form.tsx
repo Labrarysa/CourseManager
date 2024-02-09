@@ -252,7 +252,7 @@ export default function Home() {
                       </AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() => {
-                          router.push("/registerByID");
+                          router.push("/register-by-ID");
                         }}
                       >
                         نعم
