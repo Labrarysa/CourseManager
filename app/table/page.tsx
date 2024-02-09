@@ -30,7 +30,7 @@ const initialStudents = [
   },
 ];
 
-export default function Home() {
+export default function StudentsTable() {
   // useState hook to manage student data
   const [students, setStudents] = useState(initialStudents);
   // Calculate the number of students for display in the table caption
@@ -45,14 +45,14 @@ export default function Home() {
         {/* Table for displaying student data */}
         <Table className="min-w-full text-center">
           {/* Table caption showing the total number of students */}
-          <TableCaption className="text-xl font-semibold py-2">
+          <TableCaption className="py-2 text-xl font-semibold">
             {`عدد الطلاب: ${studentCount}`}
           </TableCaption>
 
           {/* Table header with column titles */}
           <TableHeader className="text-sm text-center">
             {/* Row for the main title spanning all columns */}
-            <TableRow className="text-xl font-semibold py-2">
+            <TableRow className="py-2 text-xl font-semibold">
               <TableHead colSpan={6} className="text-center">
                 كشف أسماء الطلاب
               </TableHead>
@@ -74,12 +74,12 @@ export default function Home() {
             {students.map((student) => (
               // Row for each student's data
               <TableRow className="text-sm text-center" key={student.number}>
-                <TableCell className="py-2 px-4">{student.number}</TableCell>
-                <TableCell className="py-2 px-4">{student.name}</TableCell>
-                <TableCell className="py-2 px-4">{student.studentId}</TableCell>
-                <TableCell className="py-2 px-4">{student.year}</TableCell>
-                <TableCell className="py-2 px-4">{student.email}</TableCell>
-                <TableCell className="py-2 px-4">{student.phone}</TableCell>
+                <TableCell className="px-4 py-2">{student.number}</TableCell>
+                <TableCell className="px-4 py-2">{student.name}</TableCell>
+                <TableCell className="px-4 py-2">{student.studentId}</TableCell>
+                <TableCell className="px-4 py-2">{student.year}</TableCell>
+                <TableCell className="px-4 py-2">{student.email}</TableCell>
+                <TableCell className="px-4 py-2">{student.phone}</TableCell>
               </TableRow>
             ))}
           </TableBody>
