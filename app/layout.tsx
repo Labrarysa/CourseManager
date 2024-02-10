@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
 // import { ReactQueryProvider } from "@/utils/ReactQueryProvider";
-import Providers from "@/lib/query-provider";
+import Providers from "@/utils/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
