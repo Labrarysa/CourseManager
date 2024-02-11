@@ -38,6 +38,7 @@ async function getData(): Promise<student[]> {
   ];
 }
 
+
 // The DemoPage component
 export default async function DemoPage() {
   // Fetching data asynchronously and storing it in a variable
