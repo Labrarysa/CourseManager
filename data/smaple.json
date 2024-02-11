@@ -1,0 +1,18 @@
+{
+  "formId": "1",
+  "sections": [
+    {
+      "sectionId": "sec1",
+      "title": "Personal Information",
+      "questions": [
+        {
+          "questionId": "q1",
+          "label": "First Name",
+          "type": "text",
+          "placeholder": "Enter your first name",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
