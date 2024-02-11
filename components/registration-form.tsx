@@ -81,7 +81,7 @@ async function addFormResult({ form_id, questions, user_key }: FormInput) {
   }
 }
 
-export default function Home() {
+export default function RegistrationForm() {
   const router = useRouter();
   const { toast } = useToast();
   // const [age, setAge] = React.useState("");
