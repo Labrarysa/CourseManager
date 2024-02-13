@@ -340,10 +340,11 @@ export default function Home() {
                       <FormItem>
                         <FormLabel>تاريخ الميلاد</FormLabel>
                         <FormControl>
-                          <div className="relative max-w-sm">
+                          <div className="relative max-w-sm dark:outline dark:outline-1 dark:outline-grat-800 dark:outline-offset-0">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DemoContainer components={["DatePicker"]}>
                                 <DatePicker
+                                  // className="dark:outline dark:outline-gray-400 dark:text-white"
                                   label=""
                                   onChange={(newValue: Dayjs | null) => {
                                     if (newValue) {
