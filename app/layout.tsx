@@ -6,6 +6,7 @@ import "./globals.css";
 // import { ReactQueryProvider } from "@/utils/ReactQueryProvider";
 import Providers from "@/utils/query-provider";
 import Nav from "@/components/nav";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +24,15 @@ export default function RootLayout({
     <html lang="ar">
       <body className={inter.className}>
         <Providers>
-          <Nav />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Nav />
+            {children}
+          </ThemeProvider>
           <Toaster />
         </Providers>
       </body>

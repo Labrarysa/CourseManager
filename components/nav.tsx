@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Button } from "./ui/button";
-// import ModeToggle from "./modeToggle";
+import ModeToggle from "./mode-toggle";
 
 export default function Nav() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
@@ -60,45 +60,51 @@ export default function Nav() {
             </a>
           </motion.div>
 
-          <button
-            type="button"
-            className="sm:hidden"
-            aria-label="Toggle navigation"
-            onClick={() => setIsNavExpanded(!isNavExpanded)}
-          >
-            {/* Hamburger Icon */}
-            <motion.div
-              animate={{ opacity: 1, x: 0 }}
-              initial={{ opacity: 0, x: -20 }}
-              transition={{ delay: 0.25 }}
-              onClick={() => setIsNavExpanded((prevToggle) => !prevToggle)}
-              className={`burger cursor-pointer space-y-1.5 xl:hidden lg:hidden mr-5
-        `}
+          <div className="flex items-center justify-center">
+            <div className="sm:hidden">
+              <ModeToggle />
+            </div>
+
+            <button
+              type="button"
+              className="sm:hidden"
+              aria-label="Toggle navigation"
+              onClick={() => setIsNavExpanded(!isNavExpanded)}
             >
-              <motion.span
-                animate={{
-                  rotate: isNavExpanded ? 45 : 0, // Rotate the top line 45 degrees to form one leg of the 'X'
-                  y: isNavExpanded ? 8.3 : 0, // Adjust the 'y' to move it down to meet the middle line
-                }}
-                className="block h-0.5 w-6 bg-black"
-              ></motion.span>
+              {/* Hamburger Icon */}
+              <motion.div
+                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, x: -20 }}
+                transition={{ delay: 0.25 }}
+                onClick={() => setIsNavExpanded((prevToggle) => !prevToggle)}
+                className={`burger cursor-pointer space-y-1.5 xl:hidden lg:hidden mr-5
+        `}
+              >
+                <motion.span
+                  animate={{
+                    rotate: isNavExpanded ? 45 : 0, // Rotate the top line 45 degrees to form one leg of the 'X'
+                    y: isNavExpanded ? 8.3 : 0, // Adjust the 'y' to move it down to meet the middle line
+                  }}
+                  className="block h-0.5 w-6 bg-black dark:bg-white"
+                ></motion.span>
 
-              <motion.span
-                animate={{
-                  opacity: isNavExpanded ? 0 : 1, // Hide the middle span by fading it out
-                }}
-                className="block h-0.5 w-6 bg-black"
-              ></motion.span>
+                <motion.span
+                  animate={{
+                    opacity: isNavExpanded ? 0 : 1, // Hide the middle span by fading it out
+                  }}
+                  className="block h-0.5 w-6 bg-black dark:bg-white"
+                ></motion.span>
 
-              <motion.span
-                animate={{
-                  rotate: isNavExpanded ? -45 : 0, // Rotate the bottom line -45 degrees to form the other leg of the 'X'
-                  y: isNavExpanded ? -8.3 : 0, // Adjust the 'y' to move it up to meet the middle line
-                }}
-                className="block h-0.5 w-6 bg-black"
-              ></motion.span>
-            </motion.div>
-          </button>
+                <motion.span
+                  animate={{
+                    rotate: isNavExpanded ? -45 : 0, // Rotate the bottom line -45 degrees to form the other leg of the 'X'
+                    y: isNavExpanded ? -8.3 : 0, // Adjust the 'y' to move it up to meet the middle line
+                  }}
+                  className="block h-0.5 w-6 bg-black dark:bg-white "
+                ></motion.span>
+              </motion.div>
+            </button>
+          </div>
         </div>
 
         {/* Navigation Links for large screens */}
@@ -119,7 +125,7 @@ export default function Nav() {
             >
               {item}
               <motion.span
-                className="absolute -bottom-2 left-0 items-center bg-black h-0.5"
+                className="absolute -bottom-2 left-0 items-center bg-black dark:bg-white h-0.5"
                 variants={underlineVariants}
                 initial="hidden"
                 animate={activeLink === item ? "visible" : "hidden"}
@@ -136,7 +142,7 @@ export default function Nav() {
               initial="hidden"
               animate="visible"
               exit="hidden"
-              className="fixed left-0 z-40 flex flex-col items-center justify-center w-3/5 gap-5 py-6 mt-4 ml-5 text-lg text-center shadow-2xl rounded-2xl text-primary"
+              className="fixed left-0 z-40 flex flex-col items-center justify-center w-3/5 gap-5 py-6 mt-4 ml-5 text-lg text-center shadow-2xl dark:shadow-gray-300 dark:shadow-sm rounded-2xl text-primary"
             >
               <a className="w-5/6 my-2 font-semibold " href="/">
                 من نحن
@@ -155,15 +161,15 @@ export default function Nav() {
         </AnimatePresence>
 
         <motion.div
-          className="flex gap-2 max-sm:hidden"
+          className="flex gap-4 max-sm:hidden"
           animate={{ opacity: 1, x: 0 }}
           initial={{ opacity: 0, x: -20 }}
           transition={{ delay: 0.25 }}
         >
-          <Button className="py-5 font-bold bg-black rounded-lg shadow-2xl hover:bg-neutral-800">
+          <Button className="py-5 font-bold rounded-lg shadow-2xl ">
             تسجيل الدخول
           </Button>
-          {/* <ModeToggle /> */}
+          <ModeToggle />
         </motion.div>
       </nav>
     </header>
