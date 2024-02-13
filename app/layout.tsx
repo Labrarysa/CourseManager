@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 // import { ReactQueryProvider } from "@/utils/ReactQueryProvider";
 import Providers from "@/utils/query-provider";
+import Nav from "@/components/nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="ar">
       <body className={inter.className}>
         <Providers>
+          <Nav />
           {children}
           <Toaster />
         </Providers>
