@@ -108,12 +108,7 @@ export default function Nav() {
           initial={{ opacity: 0, y: -20 }}
           transition={{ delay: 0.24 }}
         >
-          {[
-            "معدل الأرباح",
-            "حاسبة الأسهم",
-            "حاسبة القروض",
-            "تحويل العملات",
-          ].map((item) => (
+          {["من نحن", "قائمة الطلاب", "الصفوف"].map((item) => (
             <a
               key={item}
               className="relative mx-6 font-bold transition-all duration-200 text-primary delay-50"
@@ -144,16 +139,13 @@ export default function Nav() {
               className="fixed left-0 z-40 flex flex-col items-center justify-center w-3/5 gap-5 py-6 mt-4 ml-5 text-lg text-center shadow-2xl rounded-2xl text-primary"
             >
               <a className="w-5/6 my-2 font-semibold " href="/">
-                معدل الأرباح
+                من نحن
               </a>
               <a className="w-5/6 my-2 font-semibold" href="/">
-                حاسبة الأسهم
+                قائمة الطلاب
               </a>
               <a className="w-5/6 my-2 font-semibold" href="/">
-                حاسبة القروض
-              </a>
-              <a className="w-5/6 my-2 font-semibold" href="/">
-                تحويل العملات
+                الصفوف
               </a>
               <Button className="w-5/6 py-5 font-bold shadow-2xl rounded-xl text-md">
                 تسجيل الدخول
@@ -168,7 +160,7 @@ export default function Nav() {
           initial={{ opacity: 0, x: -20 }}
           transition={{ delay: 0.25 }}
         >
-          <Button className="font-bold bg-black rounded-lg shadow-2xl hover:bg-neutral-800">
+          <Button className="py-5 font-bold bg-black rounded-lg shadow-2xl hover:bg-neutral-800">
             تسجيل الدخول
           </Button>
           {/* <ModeToggle /> */}
