@@ -1,54 +1,43 @@
-// Importing necessary React hooks and components
-import React from "react";
-// Importing the student type and columns definition
-import { student, columns } from "./column";
-// Importing the DataTable component
-import { DataTable } from "./data-table";
+import React, { useEffect, useState } from 'react';
+import { student, columns } from './column';
+import { DataTable } from './data-table';
 
-// Async function to fetch or simulate fetching of student data
+// Asynchronous function to fetch student data.
+// In a real application, this might make an HTTP request to a server.
 async function getData(): Promise<student[]> {
-  return [
-    {
-      // Hardcoded data representing student entries
-      studentId: "241001",
-      name: "حسن عبدالحميد العبدالعال",
-      dateOfBirth: "12/03/2009",
-      age: "15",
-      fatherPhone: "0559763547",
-      studentPhone: "-",
-      email: "Hsoonxx@gmail.com",
-      year: "الأول ثانوي",
-      status: "انتظار",
-      class: "الحلقة الأولى",
-      group: "القروب الأول",
-    },
-    {
-      studentId: "-",
-      name: "عبدالله علي المطاوعه",
-      dateOfBirth: "23/10/2007",
-      age: "17",
-      fatherPhone: "0559763547",
-      studentPhone: "055948567",
-      email: "-",
-      year: "الثالث ثانوي",
-      status: "مقبول",
-      class: "الحلقة الثانية",
-      group: "القروب الأول",
-    },
+  // Example of fetched data - this would be replaced with real data fetching logic
+  const fetchedData: student[] = [
+    // ... replace with actual fetched data
   ];
+
+  // If additional dynamic data is required, map over fetched data and add it
+  const dataWithDynamicColumn = fetchedData.map(student => ({
+    ...student,
+    myDynamicData: 'This is dynamic data', // Replace with actual dynamic data logic
+  }));
+
+  // Return the data including any dynamic columns
+  return dataWithDynamicColumn;
 }
 
+// DemoPage component that utilizes the DataTable component
+export default function DemoPage() {
+  // State to hold the student data
+  const [data, setData] = useState<student[]>([]);
 
-// The DemoPage component
-export default async function DemoPage() {
-  // Fetching data asynchronously and storing it in a variable
-  const data = await getData();
+  // Effect hook to fetch data on component mount
+  useEffect(() => {
+    // Fetch data and set it in state
+    getData().then(fetchedData => {
+      setData(fetchedData);
+    });
+  }, []); // Empty dependency array means this effect runs once on mount
 
+  // Render the container and the DataTable with the fetched data
   return (
-    <div className="container px-2 py-10 mx-auto">
-      {/* Rendering the DataTable component with the fetched data and column configuration */}
+    <div className='container px-2 py-10 mx-auto'>
+      {/* Pass columns and data to the DataTable component */}
       <DataTable columns={columns} data={data} />
-
     </div>
   );
 }

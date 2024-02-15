@@ -1,180 +1,57 @@
 "use client";
 
-// Import necessary components and libraries
+// Import necessary UI components and utilities
 import { Button } from "@/components/ui/button";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { ColumnDef } from "@tanstack/react-table"; // Import Column Definition type from react-table
+import { ArrowUpDown } from "lucide-react"; // Icon for indicating sorting
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Type definition for 'student', specifying the structure of student data
+// Define the structure of the student data that will be used in the table
 export type student = {
-  studentId: string;
-  name: string;
-  dateOfBirth: string;
-  age: string;
-  fatherPhone: string;
-  studentPhone: string;
-  email: string;
-  year: string;
-  status: "انتظار" | "مقبول";
-  class: string;
-  group: string;
+  // ... (other student properties)
+  myDynamicData?: string; // Optional field for dynamic data that might be added
 };
 
-// Definition of table columns for displaying student data
-export const columns: ColumnDef<student>[] = [
-  // Checkbox column for selecting rows
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        className="mr-3"
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        className="mr-3"
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-  },
+// Function to create a dynamic column for the table
+// headerTitle: Display name of the column
+// accessor: Key of the data to be accessed for this column
+// sortable: Flag indicating if the column should be sortable
+const createDynamicColumn = (headerTitle: string, accessor: string, sortable: boolean) => {
+  // Initialize the column definition with basic properties
+  const column: ColumnDef<student> = {
+    accessorKey: accessor, // Data key this column should access
+    header: sortable
+      ? ({ column }) => (
+          // If sortable, return a header component with a sorting button
+          <div className="flex items-center">
+            {headerTitle}
+            <Button
+              variant="ghost"
+              onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')} // Toggle sorting on click
+              className="ml-2"
+            >
+              <ArrowUpDown className="w-4 h-4" /> // Sorting icon
+            </Button>
+          </div>
+        )
+      : headerTitle, // If not sortable, return just the title
+  };
 
-  // Column for student ID
-  {
-    accessorKey: "studentId",
-    header: "الرقم الأكاديمي",
-  },
-  // Column for student name
-  {
-    accessorKey: "name",
-    header: "الاسم الثلاثي",
-  },
-  // Column for student's date of birth
-  {
-    accessorKey: "dateOfBirth",
-    header: "تاريخ الميلاد",
-  },
-  // Column for student's age with sorting functionality
-  {
-    accessorKey: "age",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          العمر
-          <ArrowUpDown className="w-4 h-4 mr-1" />
-        </Button>
-      );
-    },
-  },
-  // Column for father's phone number
-  {
-    accessorKey: "fatherPhone",
-    header: "رقم جوال ولي الأمر",
-  },
-  // Column for student's phone number
-  {
-    accessorKey: "studentPhone",
-    header: "رقم جوال الطالب",
-  },
-  // Column for student's email address
-  {
-    accessorKey: "email",
-    header: "البريد الالكتروني",
-  },
-  // Column for student's academic year
-  {
-    accessorKey: "year",
-    header: "المرحلة الدراسية",
-  },
-  // Column for student's status with sorting functionality
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          الحالة
-          <ArrowUpDown className="w-4 h-4 mr-1" />
-        </Button>
-      );
-    },
-  },
-  // Dropdown column for selecting student's class
-  {
-    accessorKey: "class",
-    header: ({ column }) => (
-      <div className="flex items-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="mr-2"
-        >
-          الحَلقة
-          <ArrowUpDown className="w-4 h-4 mr-1" />
-        </Button>
-      </div>
-    ),
-    cell: ({ cell }) => (
-      <Select>
-        <SelectTrigger className="w-[120px]">
-          <SelectValue placeholder="اختيار الحَلقة" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="الحلقة الأولى">الحلقة الأولى</SelectItem>
-          <SelectItem value="الحلقة الثانية">الحلقة الثانية</SelectItem>
-          <SelectItem value="الحلقة الثالثة">الحلقة الثالثة</SelectItem>
-          {/* Add more options here as needed */}
-        </SelectContent>
-      </Select>
-    ),
-  },
-  // Dropdown column for selecting student's group
-  {
-    accessorKey: "group",
-    header: ({ column }) => (
-      <div className="flex items-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="mr-2"
-        >
-          المجموعة
-          <ArrowUpDown className="w-4 h-4 mr-1" />
-        </Button>
-      </div>
-    ),
-    cell: ({ cell }) => (
-      <Select>
-        <SelectTrigger className="w-[140px]">
-          <SelectValue placeholder="اختيار المجموعة" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="المجموعة الأولى">المجموعة الأولى</SelectItem>
-          <SelectItem value="المجموعة الثانية">المجموعة الثانية</SelectItem>
-          <SelectItem value="المجموعة الثالثة">المجموعة الثالثة</SelectItem>
-          {/* Add more options here as needed */}
-        </SelectContent>
-      </Select>
-    ),
-  },
+  // If the column should be sortable, enable sorting features
+  if (sortable) {
+    column.enableSorting = true;
+  }
+
+  return column; // Return the fully defined column object
+};
+
+// Create an instance of a dynamic column
+const dynamicColumn = createDynamicColumn('Dynamic Column', 'myDynamicData', true);
+
+// Export the array of column definitions, including any dynamic columns created
+export const columns: ColumnDef<student>[] = [
+  // ... (other columns definitions),
+  dynamicColumn, // Include the dynamic column in the columns array
+  // ... (you can add more dynamic columns or static columns as needed)
 ];
