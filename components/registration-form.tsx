@@ -24,11 +24,11 @@ const RegistrationForm = ({ formId }: { formId: string }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       {formStructure.sections[currentSection].questions.map((question) => (
         <input
-          key={question.questionId}
-          {...register(question.label)}
+          key={question.id}
+          {...register(question.question_text)}
           type={question.type}
-          placeholder={question.placeholder}
-          required={question.required}
+          placeholder={question.metadata.placeholder}
+          required={question.metadata.required}
         />
       ))}
       <button
