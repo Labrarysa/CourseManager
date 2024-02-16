@@ -4,12 +4,12 @@ import { DataTable } from './data-table';
 
 // The main page component that renders the DataTable.
 // It receives 'data' as a prop from getServerSideProps.
-export default function DemoPage({ data }) {
+export default function DemoPage({  }) { // DemoPage({ data }) 
   // This component renders a container div with padding and margin styling
   // and includes the DataTable component, passing in the columns and data props.
   return (
     <div className='container px-2 py-10 mx-auto'>
-      <DataTable columns={columns} data={data} />
+      {/* <DataTable columns={columns} data={data} /> */}
     </div>
   );
 }
