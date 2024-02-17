@@ -24,7 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Section from '@/components/section'; // Import the Section component
+import Section from "@/components/section"; // Import the Section component
 
 const formSchema = z.object({
   //id: z.string().uuid(),
@@ -51,11 +51,14 @@ const formSchema = z.object({
               //question_id: z.string().uuid(),
               choice_text: z.string(),
             })
-            .array(),
+            .array()
+            .min(1),
         })
-        .array(),
+        .array()
+        .min(1),
     })
-    .array(),
+    .array()
+    .min(1),
 });
 
 const NewForm = () => {
@@ -117,27 +120,37 @@ const NewForm = () => {
       <Separator />
       <section>
         <div>
-          <Card>
+          <Card className="m-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <div>
-                  {sectionFields.map((section, index) => (
-                    <Section key={section.id} sectionIndex={index} />
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      appendSection({
-                        title: "",
-                        description: "",
-                        questions: [],
-                      })
-                    }
-                  >
-                    Add Section
-                  </button>
-                  <input type="submit" />
-                </div>
+                <CardHeader>
+                  <CardTitle></CardTitle>
+                  <CardDescription></CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div>
+                    {sectionFields.map((section, index) => (
+                      <Section key={section.id} sectionIndex={index} />
+                    ))}
+                  </div>
+                  <div className="mt-2">
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        appendSection({
+                          title: "",
+                          description: "",
+                          questions: [],
+                        })
+                      }
+                    >
+                      إضافة قسم
+                    </Button>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button type="submit">إنهاء</Button>
+                </CardFooter>
               </form>
             </Form>
           </Card>
