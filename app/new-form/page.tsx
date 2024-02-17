@@ -27,28 +27,28 @@ import { Input } from "@/components/ui/input";
 import Section from '@/components/section'; // Import the Section component
 
 const formSchema = z.object({
-  id: z.string().uuid(),
+  //id: z.string().uuid(),
   title: z.string(),
   description: z.string(),
   is_quiz: z.boolean(),
   sections: z
     .object({
-      id: z.string().uuid(),
-      form_id: z.string().uuid(),
+      //id: z.string().uuid(),
+      //form_id: z.string().uuid(),
       title: z.string(),
       description: z.string(),
       questions: z
         .object({
-          id: z.string().uuid(),
-          section_id: z.string().uuid(),
+          //id: z.string().uuid(),
+          //section_id: z.string().uuid(),
           question_text: z.string(),
           type: z.string(),
           metadata: z.object({}),
-          correct_answer_id: z.string().uuid(),
+          //correct_answer_id: z.string().uuid(),
           question_choices: z
             .object({
-              id: z.string().uuid(),
-              question_id: z.string().uuid(),
+              //id: z.string().uuid(),
+              //question_id: z.string().uuid(),
               choice_text: z.string(),
             })
             .array(),
@@ -63,28 +63,28 @@ const NewForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: "",
+      //id: "",
       title: "",
       description: "",
       is_quiz: false,
       sections: [
         {
-          id: "",
-          form_id: "",
+          //id: "",
+          //form_id: "",
           title: "",
           description: "",
           questions: [
             {
-              id: "",
-              section_id: "",
+              //id: "",
+              //section_id: "",
               question_text: "",
               type: "",
               metadata: {},
-              correct_answer_id: "",
+              //correct_answer_id: "",
               question_choices: [
                 {
-                  id: "",
-                  question_id: "",
+                  //id: "",
+                  //question_id: "",
                   choice_text: "",
                 },
               ],
