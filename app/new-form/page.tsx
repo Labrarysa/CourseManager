@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Section from '@/components/section'; // Import the Section component
 
 const formSchema = z.object({
   id: z.string().uuid(),
@@ -94,6 +95,11 @@ const NewForm = () => {
     },
   });
 
+  const { fields: sectionFields, append: appendSection } = useFieldArray({
+    name: "sections",
+    control: form.control,
+  });
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -115,7 +121,22 @@ const NewForm = () => {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div>
-                    
+                  {sectionFields.map((section, index) => (
+                    <Section key={section.id} sectionIndex={index} />
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      appendSection({
+                        title: "",
+                        description: "",
+                        questions: [],
+                      })
+                    }
+                  >
+                    Add Section
+                  </button>
+                  <input type="submit" />
                 </div>
               </form>
             </Form>
