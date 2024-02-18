@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Section from "@/components/section"; // Import the Section component
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
   //id: z.string().uuid(),
@@ -119,42 +120,111 @@ const NewForm = () => {
       </section>
       <Separator />
       <section>
-        <div>
-          <Card className="m-8">
+        <Card className="m-8">
+          <CardHeader className="items-center gap-1">
+            <CardTitle>معلومات النموذج</CardTitle>
+            <CardDescription>أنشئ نموذجك الخاص حسب احتياجك</CardDescription>
+          </CardHeader>
+          <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <CardHeader>
-                  <CardTitle></CardTitle>
-                  <CardDescription></CardDescription>
-                </CardHeader>
-                <CardContent>
+                <div className="">
+                  <section className="flex flex-col justify-center gap-2 my-8">
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>عنوان النموذج</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="أدخل عنوان النموذج"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="description"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>وصف النموذج</FormLabel>
+                          <FormControl>
+                            <Input placeholder="أدخل وصف النموذج" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="is_quiz"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start gap-3 space-y-0 mt-1">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>
+                              هذا النموذج عبارة عن اختبار قصير
+                            </FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </section>
+                  <div className="mx-2">
+                    <Separator />
+                  </div>
                   <div>
                     {sectionFields.map((section, index) => (
                       <Section key={section.id} sectionIndex={index} />
                     ))}
                   </div>
-                  <div className="mt-2">
+                  <div className="flex justify-center my-4">
                     <Button
                       type="button"
                       onClick={() =>
                         appendSection({
                           title: "",
                           description: "",
-                          questions: [],
+                          questions: [
+                            {
+                              //id: "",
+                              //section_id: "",
+                              question_text: "",
+                              type: "",
+                              metadata: {},
+                              //correct_answer_id: "",
+                              question_choices: [
+                                {
+                                  //id: "",
+                                  //question_id: "",
+                                  choice_text: "",
+                                },
+                              ],
+                            },
+                          ],
                         })
                       }
                     >
                       إضافة قسم
                     </Button>
                   </div>
-                </CardContent>
-                <CardFooter>
-                  <Button type="submit">إنهاء</Button>
-                </CardFooter>
+                  <div className="pt-4">
+                    <Button type="submit">إنهاء</Button>
+                  </div>
+                </div>
               </form>
             </Form>
-          </Card>
-        </div>
+          </CardContent>
+        </Card>
       </section>
     </main>
   );
