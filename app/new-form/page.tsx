@@ -99,7 +99,11 @@ const NewForm = () => {
     },
   });
 
-  const { fields: sectionFields, append: appendSection } = useFieldArray({
+  const {
+    fields: sectionFields,
+    append: appendSection,
+    remove: removeSection,
+  } = useFieldArray({
     name: "sections",
     control: form.control,
   });
@@ -184,7 +188,12 @@ const NewForm = () => {
                   </div>
                   <div>
                     {sectionFields.map((section, index) => (
-                      <Section key={section.id} sectionIndex={index} />
+                      <Section
+                        key={section.id}
+                        sectionIndex={index}
+                        sectionsLength={sectionFields.length}
+                        removeSection={removeSection}
+                      />
                     ))}
                   </div>
                   <div className="flex justify-center my-4">
