@@ -26,6 +26,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Section from "@/components/section"; // Import the Section component
 import { Checkbox } from "@/components/ui/checkbox";
+import { PlusIcon } from "lucide-react";
 
 const formSchema = z.object({
   //id: z.string().uuid(),
@@ -124,7 +125,7 @@ const NewForm = () => {
       </section>
       <Separator />
       <section>
-        <Card className="m-8">
+        <Card className="border-0 shadow-none my-8 md:mx-8 lg:mx-16 xl:mx-24 2xl:mx-32">
           <CardHeader className="items-center gap-1">
             <CardTitle>معلومات النموذج</CardTitle>
             <CardDescription>أنشئ نموذجك الخاص حسب احتياجك</CardDescription>
@@ -199,6 +200,7 @@ const NewForm = () => {
                   <div className="flex justify-center my-4">
                     <Button
                       type="button"
+                      variant={"secondary"}
                       onClick={() =>
                         appendSection({
                           title: "",
@@ -223,7 +225,7 @@ const NewForm = () => {
                         })
                       }
                     >
-                      إضافة قسم
+                      <PlusIcon className="ml-2 w-4 h-4"></PlusIcon>إضافة قسم
                     </Button>
                   </div>
                   <div className="pt-4">
