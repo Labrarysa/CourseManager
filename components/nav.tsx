@@ -53,7 +53,7 @@ export default function Nav() {
                   className="w-6 h-auto md:w-9"
                   alt="logo"
                 /> */}
-                <h1 className="text-2xl font-extrabold tracking-tight scroll-m-20 lg:text-3xl rounded-xl">
+                <h1 className="text-xl font-extrabold tracking-tight scroll-m-20 lg:text-2xl rounded-xl">
                   دورة الإمام المنتظر
                 </h1>
               </div>
