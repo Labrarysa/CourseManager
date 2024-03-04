@@ -52,7 +52,9 @@ export const Footer = () => {
       </section>
 
       <section className="container text-center pb-14">
-        <h3>&copy; جميع الحقوق محفوظة، دورة الإمام المنتظر </h3>
+        <h3 className="flex items-center justify-center gap-1 text-sm md:text-base text-muted-foreground ">
+          جميع الحقوق محفوظة، دورة الإمام المنتظر &copy; ٢٠٢٤
+        </h3>
       </section>
     </footer>
   );
