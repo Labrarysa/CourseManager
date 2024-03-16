@@ -1,54 +1,28 @@
-// Importing necessary React hooks and components
-import React from "react";
-// Importing the student type and columns definition
-import { student, columns } from "./column";
-// Importing the DataTable component
-import { DataTable } from "./data-table";
+import React from 'react';
+import { student, columns } from './column';
+import { DataTable } from './data-table';
 
-// Async function to fetch or simulate fetching of student data
-async function getData(): Promise<student[]> {
-  return [
-    {
-      // Hardcoded data representing student entries
-      studentId: "241001",
-      name: "حسن عبدالحميد العبدالعال",
-      dateOfBirth: "12/03/2009",
-      age: "15",
-      fatherPhone: "0559763547",
-      studentPhone: "-",
-      email: "Hsoonxx@gmail.com",
-      year: "الأول ثانوي",
-      status: "انتظار",
-      class: "الحلقة الأولى",
-      group: "القروب الأول",
-    },
-    {
-      studentId: "-",
-      name: "عبدالله علي المطاوعه",
-      dateOfBirth: "23/10/2007",
-      age: "17",
-      fatherPhone: "0559763547",
-      studentPhone: "055948567",
-      email: "-",
-      year: "الثالث ثانوي",
-      status: "مقبول",
-      class: "الحلقة الثانية",
-      group: "القروب الأول",
-    },
-  ];
-}
-
-
-// The DemoPage component
-export default async function DemoPage() {
-  // Fetching data asynchronously and storing it in a variable
-  const data = await getData();
-
+// The main page component that renders the DataTable.
+// It receives 'data' as a prop from getServerSideProps.
+export default function DemoPage({  }) { // DemoPage({ data }) 
+  // This component renders a container div with padding and margin styling
+  // and includes the DataTable component, passing in the columns and data props.
   return (
-    <div className="container px-2 py-10 mx-auto">
-      {/* Rendering the DataTable component with the fetched data and column configuration */}
-      <DataTable columns={columns} data={data} />
-
+    <div className='container px-2 py-10 mx-auto'>
+      {/* <DataTable columns={columns} data={data} /> */}
     </div>
   );
+}
+
+// getServerSideProps is a Next.js function that runs on the server for each request.
+// It fetches data that is passed as props to the page component above.
+export async function getServerSideProps() {
+  // Simulate data fetching. In a real application, this could be an API call.
+  const data: student[] = [
+    // ... replace this with actual data fetching logic
+  ];
+
+  // The fetched data is returned as props to the page component.
+  // This data will be server-rendered, so it's available before the page is sent to the client.
+  return { props: { data } };
 }
