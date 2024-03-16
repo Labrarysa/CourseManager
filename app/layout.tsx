@@ -7,6 +7,7 @@ import "./globals.css";
 import Providers from "@/utils/query-provider";
 import Nav from "@/components/nav";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
             <Nav />
             {children}
           </ThemeProvider>
+          <Footer />
           <Toaster />
         </Providers>
       </body>

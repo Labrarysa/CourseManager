@@ -28,7 +28,7 @@ export default function Nav() {
 
   return (
     <header
-      className="fixed z-50 flex flex-wrap w-full py-8 text-sm sm:justify-start sm:flex-nowrap"
+      className="z-50 flex flex-wrap w-full py-8 text-sm sm:justify-start sm:flex-nowrap"
       style={{ backgroundImage: "url('/assets/navBackground.png')" }}
     >
       <nav
@@ -53,7 +53,7 @@ export default function Nav() {
                   className="w-6 h-auto md:w-9"
                   alt="logo"
                 /> */}
-                <h1 className="text-2xl font-extrabold tracking-tight scroll-m-20 lg:text-3xl rounded-xl">
+                <h1 className="text-xl font-extrabold tracking-tight scroll-m-20 lg:text-2xl rounded-xl">
                   دورة الإمام المنتظر
                 </h1>
               </div>
@@ -142,7 +142,7 @@ export default function Nav() {
               initial="hidden"
               animate="visible"
               exit="hidden"
-              className="fixed left-0 z-40 flex flex-col items-center justify-center w-3/5 gap-5 py-6 mt-4 ml-5 text-lg text-center shadow-2xl dark:shadow-gray-300 dark:shadow-sm rounded-2xl text-primary"
+              className="fixed left-0 z-40 flex flex-col items-center justify-center bg-[#f7f7f7] dark:bg-[#121212] w-3/5 gap-5 py-6 mt-4 ml-5 text-lg text-center shadow-xl rounded-2xl text-primary"
             >
               <a className="w-5/6 my-2 font-semibold " href="/">
                 من نحن
