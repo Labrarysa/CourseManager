@@ -10,8 +10,9 @@ const students = await db.select().from(Student);
   {
     students.map((student) => (
       <li>
-        {student.firstName} {student.fatherName} {student.grandFatherName}
-        {student.lastName} - {student.birthDate}
+        <a href={"/student/" + student.id}>
+          <pre>{JSON.stringify(student, null, 2)}</pre>
+        </a>
       </li>
     ))
   }
