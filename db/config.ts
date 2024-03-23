@@ -25,11 +25,18 @@ const Group = defineTable({
   }
 })
 
+const StudentGroup = defineTable({
+  columns: {
+    studentId: column.text({ references: () => Student.columns.id }),
+    groupId: column.text({ references: () => Group.columns.name })
+  },
+})
+
 
 
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Student, Circle, Group },
+  tables: { Student, Circle, Group, StudentGroup },
 });
 
 
