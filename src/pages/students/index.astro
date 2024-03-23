@@ -15,7 +15,7 @@ const students = await db
   {
     students.map(({ Student: student, Group: group }) => (
       <li>
-        <a href={"/student/" + student.id} style="text-decoration:none;">
+        <a href={"/students/" + student.id} style="text-decoration:none;">
           <pre>{JSON.stringify({ student, group }, null, 2)}</pre>
         </a>
       </li>
