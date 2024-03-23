@@ -11,10 +11,25 @@ const Student = defineTable({
   },
 });
 
+const Circle = defineTable({
+  columns: {
+    number: column.number({ primaryKey: true })
+  }
+
+})
+
+const Group = defineTable({
+  columns: {
+    name: column.text(),
+    circle: column.number({ references: () => Circle.columns.number })
+  }
+})
+
+
 
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Student },
+  tables: { Student, Circle, Group },
 });
 
 
