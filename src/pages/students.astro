@@ -1,6 +1,18 @@
 ---
+import { Student, db } from "astro:db";
 
+const students = await db.select().from(Student);
 ---
 
 <h1>Students Page</h1>
 <!-- Here we will fetch all users data as a cards/table -->
+<ul>
+  {
+    students.map((student) => (
+      <li>
+        {student.firstName} {student.fatherName} {student.grandFatherName}
+        {student.lastName} - {student.birthDate}
+      </li>
+    ))
+  }
+</ul>
