@@ -2,9 +2,12 @@ import { defineDb, defineTable, column } from 'astro:db';
 
 const Student = defineTable({
   columns: {
-    id: column.text({ default: Math.random().toString() }),
+    id: column.text(), // Later we will automate it to get a default uuid.
     firstName: column.text(),
-    lastName: column.text()
+    fatherName: column.text(),
+    grandFatherName: column.text(),
+    lastName: column.text(),
+    birthDate: column.date()
   },
 });
 
