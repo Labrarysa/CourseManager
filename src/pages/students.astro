@@ -1,22 +1,22 @@
 ---
+import { eq } from "astro:db";
 import { Student, db, Group, StudentGroup, Circle } from "astro:db";
 
-const students = await db.select().from(Student);
-const groups = await db.select().from(Group);
-const circle = await db.select().from(Circle);
-const studentGroup = await db.select().from(StudentGroup);
-
-console.log({ studentGroup });
+const students = await db
+  .select({ Student, Group })
+  .from(Student)
+  .innerJoin(StudentGroup, eq(Student.id, StudentGroup.studentId))
+  .innerJoin(Group, eq(Group.id, StudentGroup.groupId));
 ---
 
 <h1>Students Page</h1>
 <!-- Here we will fetch all users data as a cards/table -->
 <ul>
   {
-    students.map((student) => (
+    students.map(({ Student: student, Group: group }) => (
       <li>
-        <a href={"/student/" + student.id}>
-          <pre>{JSON.stringify(student, null, 2)}</pre>
+        <a href={"/student/" + student.id} style="text-decoration:none;">
+          <pre>{JSON.stringify({ student, group }, null, 2)}</pre>
         </a>
       </li>
     ))

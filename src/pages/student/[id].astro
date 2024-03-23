@@ -1,12 +1,15 @@
 ---
-import { Student, db, eq } from "astro:db";
+import { Group } from "astro:db";
+import { Student, db, eq, StudentGroup } from "astro:db";
 
 const { id } = Astro.params;
 
 const studens = await db
-  .select()
+  .select({ Student, Group })
   .from(Student)
-  .where(eq(Student.id, id as string));
+  .where(eq(Student.id, id as string))
+  .innerJoin(StudentGroup, eq(Student.id, StudentGroup.studentId))
+  .fullJoin(Group, eq(StudentGroup.groupId, Group.id));
 
 if (studens.length === 0) {
   throw new Error("This id does not belong to any student.");
