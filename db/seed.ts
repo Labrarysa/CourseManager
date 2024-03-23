@@ -1,10 +1,14 @@
 import { Faker, ar } from '@faker-js/faker';
-import { Student, db, } from 'astro:db';
+import { Circle, Group, Student, db, } from 'astro:db';
 
 // https://astro.build/db/seed
 export default async function seed() {
 	// Generate random 10 students
 	await db.insert(Student).values(Array.from({ length: 100 }, () => createRandomStudent()))
+
+	await db.insert(Circle).values(Array.from({ length: 12 }, (_, i) => ({ number: i + 1 })))
+
+	await db.insert(Group).values(generateGroups())
 }
 
 
@@ -26,4 +30,16 @@ function createRandomStudent() {
 		lastName: faker.person.lastName(),
 		birthDate: faker.date.between({ from: new Date(2000), to: new Date(2015) })
 	}
+}
+
+function generateGroups() {
+	const groups = []
+	const randomNum = Math.floor(Math.random() * (8 - 2 + 1)) + 2;
+	for (let i = 0; i < 12; i++) {
+		for (let j = 0; j < randomNum; j++) {
+			groups.push({ circle: i, name: faker.person.firstName() }) // Just fake names :)
+		}
+	}
+
+	return groups;
 }
