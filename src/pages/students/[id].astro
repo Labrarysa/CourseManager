@@ -4,18 +4,16 @@ import { Student, db, eq, StudentGroup } from "astro:db";
 
 const { id } = Astro.params;
 
-const studens = await db
+const [student] = await db
   .select({ Student, Group })
   .from(Student)
   .where(eq(Student.id, id as string))
   .innerJoin(StudentGroup, eq(Student.id, StudentGroup.studentId))
   .fullJoin(Group, eq(StudentGroup.groupId, Group.id));
 
-if (studens.length === 0) {
+if (typeof student === "undefined") {
   throw new Error("This id does not belong to any student.");
 }
-
-const student = studens[0];
 ---
 
 <div>
