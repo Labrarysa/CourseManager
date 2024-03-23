@@ -2,7 +2,7 @@ import { defineDb, defineTable, column } from 'astro:db';
 
 const Student = defineTable({
   columns: {
-    id: column.text(), // Later we will automate it to get a default uuid.
+    id: column.text({ primaryKey: true }), // Later we will automate it to get a default uuid.
     firstName: column.text(),
     fatherName: column.text(),
     grandFatherName: column.text(),
@@ -20,6 +20,7 @@ const Circle = defineTable({
 
 const Group = defineTable({
   columns: {
+    id: column.text({ primaryKey: true }),
     name: column.text(),
     circle: column.number({ references: () => Circle.columns.number })
   }
@@ -28,7 +29,7 @@ const Group = defineTable({
 const StudentGroup = defineTable({
   columns: {
     studentId: column.text({ references: () => Student.columns.id }),
-    groupId: column.text({ references: () => Group.columns.name })
+    groupId: column.text({ references: () => Group.columns.id })
   },
 })
 

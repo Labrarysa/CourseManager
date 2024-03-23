@@ -1,7 +1,12 @@
 ---
-import { Student, db } from "astro:db";
+import { Student, db, Group, StudentGroup, Circle } from "astro:db";
 
 const students = await db.select().from(Student);
+const groups = await db.select().from(Group);
+const circle = await db.select().from(Circle);
+const studentGroup = await db.select().from(StudentGroup);
+
+console.log({ studentGroup });
 ---
 
 <h1>Students Page</h1>

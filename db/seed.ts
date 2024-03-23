@@ -1,5 +1,5 @@
 import { Faker, ar } from '@faker-js/faker';
-import { Circle, Group, Student, db, } from 'astro:db';
+import { Circle, Group, Student, StudentGroup, db, eq, } from 'astro:db';
 
 // https://astro.build/db/seed
 export default async function seed() {
@@ -9,6 +9,8 @@ export default async function seed() {
 	await db.insert(Circle).values(Array.from({ length: 12 }, (_, i) => ({ number: i + 1 })))
 
 	await db.insert(Group).values(generateGroups())
+
+	await assignStudentsToGroups();
 }
 
 
@@ -28,7 +30,7 @@ function createRandomStudent() {
 		fatherName: faker.person.firstName("male"),
 		grandFatherName: faker.person.firstName("male"),
 		lastName: faker.person.lastName(),
-		birthDate: faker.date.between({ from: new Date(2000), to: new Date(2015) })
+		birthDate: faker.date.between({ from: new Date(2006, 0, 0), to: new Date(2017, 12, 31) })
 	}
 }
 
@@ -37,9 +39,38 @@ function generateGroups() {
 	const randomNum = Math.floor(Math.random() * (8 - 2 + 1)) + 2;
 	for (let i = 0; i < 12; i++) {
 		for (let j = 0; j < randomNum; j++) {
-			groups.push({ circle: i, name: faker.person.firstName() }) // Just fake names :)
+			groups.push({ circle: i + 1, name: faker.person.firstName(), id: Math.random() + "" }) // Just fake names :)
 		}
 	}
 
 	return groups;
 }
+
+const calculateAge = (birthDate: Date) => Math.floor((new Date().getTime() - new Date(birthDate).getTime()) / (1000 * 60 * 60 * 24 * 365.25));
+
+const randomElement = <T>(array: T[]) => array[Math.floor(Math.random() * array.length)];
+
+async function assignStudentsToGroups() {
+	const students = await db.select().from(Student);
+
+	const studentsWithAges = students.map((student) => ({ ...student, age: calculateAge(student.birthDate) }));
+
+	const queries = [];
+
+	for (const student of studentsWithAges) {
+		// Students will join circle 1 with age of 6, 
+		// The maximum age will be 18 which is group 12.
+		// So, for calculaction we will be: age - 6.
+		const circle = student.age - 6;
+
+		if (circle > 0 && circle < 13) {
+			const groups = await db.select().from(Group).where(eq(Group.circle, circle));
+			const randomGroup = randomElement(groups);
+			queries.push(db.insert(StudentGroup).values({ studentId: student.id, groupId: randomGroup.id }))
+		}
+	}
+
+	await db.batch(queries as any);
+
+}
+
