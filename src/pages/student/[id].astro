@@ -1,0 +1,21 @@
+---
+import { Student, db, eq } from "astro:db";
+import Students from "../students.astro";
+
+const { id } = Astro.params;
+
+const studens = await db
+  .select()
+  .from(Student)
+  .where(eq(Student.id, id as string));
+
+if (studens.length === 0) {
+  throw new Error("This id does not belong to any student.");
+}
+
+const student = studens[0];
+---
+
+<div>
+  <pre>{JSON.stringify(student, null,2)}</pre>
+</div>
