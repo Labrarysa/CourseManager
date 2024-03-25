@@ -1,5 +1,5 @@
 import { defineDb, defineTable, column } from 'astro:db';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 
 const Student = defineTable({
   columns: {
