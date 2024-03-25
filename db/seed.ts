@@ -1,5 +1,6 @@
 import { Faker, ar } from '@faker-js/faker';
-import { Circle, Group, Student, StudentGroup, db, eq, } from 'astro:db';
+import { Circle, Group, Student, StudentGroup, db, eq, Teacher } from 'astro:db';
+import { v4 as uuid } from 'uuid';
 
 // https://astro.build/db/seed
 export default async function seed() {
@@ -8,7 +9,7 @@ export default async function seed() {
 
 	await db.insert(Circle).values(Array.from({ length: 12 }, (_, i) => ({ number: i + 1 })))
 
-	await db.insert(Group).values(generateGroups())
+	await db.insert(Group).values(await generateGroups())
 
 	await assignStudentsToGroups();
 }
@@ -36,13 +37,15 @@ function createRandomStudent() {
 
 const randomizeNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-function generateGroups() {
-	const groups = []
+type GroupType = typeof Group["$inferInsert"]
+async function generateGroups(): Promise<GroupType[]> {
+	const groups: GroupType[] = []
 	for (let i = 0; i < 12; i++) {
 		const randomNum = randomizeNumber(3, 10);
 
 		for (let j = 0; j < randomNum; j++) {
-			groups.push({ circle: i + 1, name: faker.person.firstName(), id: Math.random() + "", year: randomizeNumber(2023, 2024) }) // Just fake names :)
+			const groupTeacher = await insertRandomTeacher()
+			groups.push({ circle: i + 1, name: faker.person.firstName(), id: Math.random() + "", year: randomizeNumber(2023, 2024), teacherId: groupTeacher }) // Just fake names :)
 		}
 	}
 
@@ -76,4 +79,17 @@ async function assignStudentsToGroups() {
 	await db.batch(queries as any);
 
 }
+type TeacherType = typeof Teacher["$inferInsert"]
+function generateRandomTeacher(id?: string): TeacherType {
+	return {
+		id,
+		firstName: faker.person.firstName(),
+		lastName: faker.person.lastName(),
+	}
+}
 
+async function insertRandomTeacher() {
+	const id = uuid();
+	await db.insert(Teacher).values([generateRandomTeacher(id)])
+	return id;
+}

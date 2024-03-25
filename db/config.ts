@@ -24,7 +24,8 @@ const Group = defineTable({
     id: column.text({ primaryKey: true }),
     name: column.text(),
     circle: column.number({ references: () => Circle.columns.number }),
-    year: column.number()
+    year: column.number(),
+    teacherId: column.text({ references: () => Teacher.columns.id, optional: true })
   }
 })
 
@@ -35,11 +36,17 @@ const StudentGroup = defineTable({
   },
 })
 
-
+const Teacher = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true, default: uuid() }),
+    firstName: column.text(),
+    lastName: column.text(),
+  },
+});
 
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Student, Circle, Group, StudentGroup },
+  tables: { Student, Circle, Group, StudentGroup, Teacher },
 });
 
 
