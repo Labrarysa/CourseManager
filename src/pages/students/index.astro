@@ -6,8 +6,8 @@ import Layout from "../../layouts/Layout.astro";
 const students = await db
   .select({ Student, Group })
   .from(Student)
-  .innerJoin(StudentGroup, eq(Student.id, StudentGroup.studentId))
-  .innerJoin(Group, eq(Group.id, StudentGroup.groupId));
+  .leftJoin(StudentGroup, eq(Student.id, StudentGroup.studentId))
+  .leftJoin(Group, eq(Group.id, StudentGroup.groupId));
 ---
 
 <Layout>
@@ -17,7 +17,7 @@ const students = await db
     {
       students.map(({ Student: student, Group: group }) => (
         <li>
-          <a href={"/students/" + student.id} style="text-decoration:none;">
+          <a href={"/students/" + student?.id} style="text-decoration:none;">
             <pre>{JSON.stringify({ student, group }, null, 2)}</pre>
           </a>
         </li>
