@@ -1,8 +1,9 @@
 import { defineDb, defineTable, column } from 'astro:db';
+import { uuid } from 'uuidv4';
 
 const Student = defineTable({
   columns: {
-    id: column.text({ primaryKey: true }), // Later we will automate it to get a default uuid.
+    id: column.text({ primaryKey: true, default: uuid() }),
     firstName: column.text(),
     fatherName: column.text(),
     grandFatherName: column.text(),
