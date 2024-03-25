@@ -2,6 +2,8 @@
 import { db, Group } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
 
+const year = new Date().getFullYear();
+
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
   const values = Object.fromEntries(formData.entries());
@@ -11,6 +13,7 @@ if (Astro.request.method === "POST") {
       {
         circle: parseInt(values.circle as string),
         name: values.name as string,
+        year: parseInt(values.year as string),
       },
     ]);
 
@@ -25,6 +28,7 @@ if (Astro.request.method === "POST") {
   <form method="post">
     <input type="text" name="name" placeholder="name" />
     <input type="number" name="circle" placeholder="circle" min="1" max="12" />
+    <input type="number" name="year" value={year} />
     <button type="submit">submit</button>
   </form>
 </Layout>

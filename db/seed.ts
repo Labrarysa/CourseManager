@@ -34,12 +34,15 @@ function createRandomStudent() {
 	}
 }
 
+const randomizeNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+
 function generateGroups() {
 	const groups = []
-	const randomNum = Math.floor(Math.random() * (8 - 2 + 1)) + 2;
 	for (let i = 0; i < 12; i++) {
+		const randomNum = randomizeNumber(3, 10);
+
 		for (let j = 0; j < randomNum; j++) {
-			groups.push({ circle: i + 1, name: faker.person.firstName(), id: Math.random() + "" }) // Just fake names :)
+			groups.push({ circle: i + 1, name: faker.person.firstName(), id: Math.random() + "", year: randomizeNumber(2023, 2024) }) // Just fake names :)
 		}
 	}
 

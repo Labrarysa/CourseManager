@@ -23,7 +23,8 @@ const Group = defineTable({
   columns: {
     id: column.text({ primaryKey: true }),
     name: column.text(),
-    circle: column.number({ references: () => Circle.columns.number })
+    circle: column.number({ references: () => Circle.columns.number }),
+    year: column.number()
   }
 })
 
