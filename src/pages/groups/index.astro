@@ -3,18 +3,21 @@ import { Group } from "astro:db";
 import { eq } from "astro:db";
 import { Circle } from "astro:db";
 import { db } from "astro:db";
+import Layout from "../../layouts/Layout.astro";
 
 const groups = await db.select().from(Group);
 ---
 
-<ul>
-  {
-    groups.map(({ circle, name, id }) => (
-      <li>
-        <a href={"/groups/" + id}>
-          circle {circle} - group {name}
-        </a>
-      </li>
-    ))
-  }
-</ul>
+<Layout>
+  <ul>
+    {
+      groups.map(({ circle, name, id }) => (
+        <li>
+          <a href={"/groups/" + id}>
+            circle {circle} - group {name}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

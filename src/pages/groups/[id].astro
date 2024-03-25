@@ -2,6 +2,7 @@
 import { Student } from "astro:db";
 import { StudentGroup } from "astro:db";
 import { db, Group, eq } from "astro:db";
+import Layout from "../../layouts/Layout.astro";
 
 const { id } = Astro.params;
 const [group] = await db
@@ -18,4 +19,6 @@ const studens = await db
   .where(eq(Group.id, id as string));
 ---
 
-<pre>{JSON.stringify({group, studens }, null, 2)}</pre>
+<Layout>
+  <pre>{JSON.stringify({group, studens }, null, 2)}</pre>
+</Layout>
