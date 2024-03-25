@@ -1,11 +1,8 @@
 ---
-import { Group } from "astro:db";
-import { eq } from "astro:db";
-import { Circle } from "astro:db";
-import { db } from "astro:db";
+import { db, Group, asc } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
 
-const groups = await db.select().from(Group);
+const groups = await db.select().from(Group).orderBy(asc(Group.circle));
 ---
 
 <Layout>
