@@ -1,6 +1,7 @@
 ---
 import { eq } from "astro:db";
 import { Student, db, Group, StudentGroup, Circle } from "astro:db";
+import Layout from "../../layouts/Layout.astro";
 
 const students = await db
   .select({ Student, Group })
@@ -9,16 +10,18 @@ const students = await db
   .innerJoin(Group, eq(Group.id, StudentGroup.groupId));
 ---
 
-<h1>Students Page</h1>
-<!-- Here we will fetch all users data as a cards/table -->
-<ul>
-  {
-    students.map(({ Student: student, Group: group }) => (
-      <li>
-        <a href={"/students/" + student.id} style="text-decoration:none;">
-          <pre>{JSON.stringify({ student, group }, null, 2)}</pre>
-        </a>
-      </li>
-    ))
-  }
-</ul>
+<Layout>
+  <h1>Students Page</h1>
+  <!-- Here we will fetch all users data as a cards/table -->
+  <ul>
+    {
+      students.map(({ Student: student, Group: group }) => (
+        <li>
+          <a href={"/students/" + student.id} style="text-decoration:none;">
+            <pre>{JSON.stringify({ student, group }, null, 2)}</pre>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
