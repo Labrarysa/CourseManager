@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import { db, Student } from "astro:db";
+import { Button } from "@/components/ui/button";
 
 const students = await db.select().from(Student);
 ---
@@ -53,6 +54,8 @@ const students = await db.select().from(Student);
 				))
 			}
 		</ul>
+
+		<Button>Hello World</Button>
 	</main>
 </Layout>
 
