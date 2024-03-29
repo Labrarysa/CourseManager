@@ -28,10 +28,10 @@
     "typescript": "^5.4.2"
   },
   "devDependencies": {
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.4.2",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
     "@types/uuid": "^9.0.8"
 
-  },
+  }
 }
